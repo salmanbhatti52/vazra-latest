@@ -101,6 +101,42 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:450399040998:android:5a82b22579c9a273d35227",
+        "android_client_info": {
+          "package_name": "com.vazra.apps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "450399040998-o26r3ctt9decb1p17vkrnfsl9brhh3lu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAZwTz-z9refRmTXv6N9PzPusloI_lwko"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "450399040998-o26r3ctt9decb1p17vkrnfsl9brhh3lu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "450399040998-upbf37fvhia505dbttepomjli0pqlana.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.fibrechat.app"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
