@@ -1,0 +1,71 @@
+{
+  "project_info": {
+    "project_number": "450399040998",
+    "firebase_url": "https://fibrechat-fcd22-default-rtdb.firebaseio.com",
+    "project_id": "fibrechat-fcd22",
+    "storage_bucket": "fibrechat-fcd22.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:450399040998:android:e05bcf5ea6a2517bd35227",
+        "android_client_info": {
+          "package_name": "com.fibrechat.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "450399040998-ba2fqaeqkth0vt26jae7gctcjd71lpv4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fibrechat.app",
+            "certificate_hash": "2c188474ac48034775511d478d55d1790cc2d83c"
+          }
+        },
+        {
+          "client_id": "450399040998-id4v2a32uhqsl3t3315r7n4gedgsvopi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fibrechat.app",
+            "certificate_hash": "8918a24d20a792a9a2e71ff71640fe3efb40555a"
+          }
+        },
+        {
+          "client_id": "450399040998-rnv497ed6ho4q684eamkr8beo3bbkbv9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fibrechat.app",
+            "certificate_hash": "22b212a9fb7b494f8ccdba08f8f8cc47d9345425"
+          }
+        },
+        {
+          "client_id": "450399040998-o26r3ctt9decb1p17vkrnfsl9brhh3lu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAZwTz-z9refRmTXv6N9PzPusloI_lwko"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "450399040998-o26r3ctt9decb1p17vkrnfsl9brhh3lu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "450399040998-upbf37fvhia505dbttepomjli0pqlana.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.fibrechat.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
