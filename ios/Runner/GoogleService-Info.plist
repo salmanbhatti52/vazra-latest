@@ -27,7 +27,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:450399040998:ios:838a86872db90bb6d35227</string>
+	<string>1:450399040998:ios:f96e922114df6168d35227</string>
 	<key>DATABASE_URL</key>
 	<string>https://fibrechat-fcd22-default-rtdb.firebaseio.com</string>
 </dict>
