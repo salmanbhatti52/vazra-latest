@@ -1,6 +1,7 @@
 //*************   © Copyrighted by Thinkcreative_Technologies. An Exclusive item of Envato market. Make sure you have purchased a Regular License OR Extended license for the Source Code from Envato to use this product. See the License Defination attached with source code. *********************
 
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fiberchat/Configs/Dbkeys.dart';
 import 'package:fiberchat/Configs/Dbpaths.dart';
@@ -10,8 +11,6 @@ import 'package:fiberchat/Configs/optional_constants.dart';
 import 'package:fiberchat/Screens/call_history/callhistory.dart';
 import 'package:fiberchat/Screens/calling_screen/pickup_layout.dart';
 import 'package:fiberchat/Screens/homepage/Setupdata.dart';
-import 'package:fiberchat/Screens/notifications/AllNotifications.dart';
-import 'package:fiberchat/Screens/privacypolicy&TnC/PdfViewFromCachedUrl.dart';
 import 'package:fiberchat/Services/Providers/Observer.dart';
 import 'package:fiberchat/Services/localization/language.dart';
 import 'package:fiberchat/Services/localization/language_constants.dart';
@@ -26,7 +25,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SettingsOption extends StatefulWidget {
   final bool biometricEnabled;
@@ -425,117 +423,117 @@ class _SettingsOptionState extends State<SettingsOption> {
               // Divider(),
 
               // Divider(),
-              ListTile(
-                onTap: () {
-                  widget.onTapEditProfile();
-                },
-                contentPadding: EdgeInsets.fromLTRB(30, 3, 10, 3),
-                leading: Padding(
-                  padding: const EdgeInsets.only(top: 6),
-                  child: Icon(
-                    Icons.account_circle_rounded,
-                    color: fiberchatPRIMARYcolor.withOpacity(0.85),
-                    size: 26,
-                  ),
-                ),
-                title: Text(
-                  getTranslated(context, 'editprofile'),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: pickTextColorBasedOnBgColorAdvanced(
-                          Thm.isDarktheme(widget.prefs)
-                              ? fiberchatBACKGROUNDcolorDarkMode
-                              : fiberchatBACKGROUNDcolorLightMode)),
-                ),
-                subtitle: Padding(
-                  padding: const EdgeInsets.only(top: 4),
-                  child: Text(
-                    getTranslated(context, 'changednp'),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 14, color: fiberchatGrey),
-                  ),
-                ),
-              ),
-              ListTile(
-                onTap: () async {
-                  if (observer.feedbackEmail.contains('@')) {
-                    final Uri emailLaunchUri = Uri(
-                      scheme: 'mailto',
-                      path: observer.feedbackEmail,
-                    );
-
-                    await launchUrl(emailLaunchUri);
-                  } else {
-                    custom_url_launcher(observer.feedbackEmail);
-                  }
-                },
-                contentPadding: EdgeInsets.fromLTRB(30, 3, 10, 3),
-                leading: Padding(
-                  padding: const EdgeInsets.only(top: 6),
-                  child: Icon(
-                    Icons.rate_review_outlined,
-                    color: fiberchatPRIMARYcolor.withOpacity(0.85),
-                    size: 26,
-                  ),
-                ),
-                title: Text(
-                  getTranslated(context, 'feedback'),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: pickTextColorBasedOnBgColorAdvanced(
-                          Thm.isDarktheme(widget.prefs)
-                              ? fiberchatBACKGROUNDcolorDarkMode
-                              : fiberchatBACKGROUNDcolorLightMode)),
-                ),
-                subtitle: Padding(
-                  padding: const EdgeInsets.only(top: 4),
-                  child: Text(
-                    getTranslated(context, 'givesuggestions'),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 14, color: fiberchatGrey),
-                  ),
-                ),
-              ),
-              ListTile(
-                onTap: () {
-                  onTapRateApp();
-                },
-                contentPadding: EdgeInsets.fromLTRB(30, 3, 10, 3),
-                leading: Padding(
-                  padding: const EdgeInsets.only(top: 3),
-                  child: Icon(
-                    Icons.star_outline_rounded,
-                    color: fiberchatPRIMARYcolor.withOpacity(0.85),
-                    size: 29,
-                  ),
-                ),
-                title: Text(
-                  getTranslated(context, 'rate'),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: pickTextColorBasedOnBgColorAdvanced(
-                          Thm.isDarktheme(widget.prefs)
-                              ? fiberchatBACKGROUNDcolorDarkMode
-                              : fiberchatBACKGROUNDcolorLightMode)),
-                ),
-                subtitle: Padding(
-                  padding: const EdgeInsets.only(top: 4),
-                  child: Text(
-                    getTranslated(context, 'leavereview'),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 14, color: fiberchatGrey),
-                  ),
-                ),
-              ),
+              // ListTile(
+              //   onTap: () {
+              //     widget.onTapEditProfile();
+              //   },
+              //   contentPadding: EdgeInsets.fromLTRB(30, 3, 10, 3),
+              //   leading: Padding(
+              //     padding: const EdgeInsets.only(top: 6),
+              //     child: Icon(
+              //       Icons.account_circle_rounded,
+              //       color: fiberchatPRIMARYcolor.withOpacity(0.85),
+              //       size: 26,
+              //     ),
+              //   ),
+              //   title: Text(
+              //     getTranslated(context, 'editprofile'),
+              //     maxLines: 1,
+              //     overflow: TextOverflow.ellipsis,
+              //     style: TextStyle(
+              //         fontSize: 16,
+              //         color: pickTextColorBasedOnBgColorAdvanced(
+              //             Thm.isDarktheme(widget.prefs)
+              //                 ? fiberchatBACKGROUNDcolorDarkMode
+              //                 : fiberchatBACKGROUNDcolorLightMode)),
+              //   ),
+              //   subtitle: Padding(
+              //     padding: const EdgeInsets.only(top: 4),
+              //     child: Text(
+              //       getTranslated(context, 'changednp'),
+              //       maxLines: 1,
+              //       overflow: TextOverflow.ellipsis,
+              //       style: TextStyle(fontSize: 14, color: fiberchatGrey),
+              //     ),
+              //   ),
+              // ),
+              // ListTile(
+              //   onTap: () async {
+              //     if (observer.feedbackEmail.contains('@')) {
+              //       final Uri emailLaunchUri = Uri(
+              //         scheme: 'mailto',
+              //         path: observer.feedbackEmail,
+              //       );
+              //
+              //       await launchUrl(emailLaunchUri);
+              //     } else {
+              //       custom_url_launcher(observer.feedbackEmail);
+              //     }
+              //   },
+              //   contentPadding: EdgeInsets.fromLTRB(30, 3, 10, 3),
+              //   leading: Padding(
+              //     padding: const EdgeInsets.only(top: 6),
+              //     child: Icon(
+              //       Icons.rate_review_outlined,
+              //       color: fiberchatPRIMARYcolor.withOpacity(0.85),
+              //       size: 26,
+              //     ),
+              //   ),
+              //   title: Text(
+              //     getTranslated(context, 'feedback'),
+              //     maxLines: 1,
+              //     overflow: TextOverflow.ellipsis,
+              //     style: TextStyle(
+              //         fontSize: 16,
+              //         color: pickTextColorBasedOnBgColorAdvanced(
+              //             Thm.isDarktheme(widget.prefs)
+              //                 ? fiberchatBACKGROUNDcolorDarkMode
+              //                 : fiberchatBACKGROUNDcolorLightMode)),
+              //   ),
+              //   subtitle: Padding(
+              //     padding: const EdgeInsets.only(top: 4),
+              //     child: Text(
+              //       getTranslated(context, 'givesuggestions'),
+              //       maxLines: 1,
+              //       overflow: TextOverflow.ellipsis,
+              //       style: TextStyle(fontSize: 14, color: fiberchatGrey),
+              //     ),
+              //   ),
+              // ),
+              // ListTile(
+              //   onTap: () {
+              //     onTapRateApp();
+              //   },
+              //   contentPadding: EdgeInsets.fromLTRB(30, 3, 10, 3),
+              //   leading: Padding(
+              //     padding: const EdgeInsets.only(top: 3),
+              //     child: Icon(
+              //       Icons.star_outline_rounded,
+              //       color: fiberchatPRIMARYcolor.withOpacity(0.85),
+              //       size: 29,
+              //     ),
+              //   ),
+              //   title: Text(
+              //     getTranslated(context, 'rate'),
+              //     maxLines: 1,
+              //     overflow: TextOverflow.ellipsis,
+              //     style: TextStyle(
+              //         fontSize: 16,
+              //         color: pickTextColorBasedOnBgColorAdvanced(
+              //             Thm.isDarktheme(widget.prefs)
+              //                 ? fiberchatBACKGROUNDcolorDarkMode
+              //                 : fiberchatBACKGROUNDcolorLightMode)),
+              //   ),
+              //   subtitle: Padding(
+              //     padding: const EdgeInsets.only(top: 4),
+              //     child: Text(
+              //       getTranslated(context, 'leavereview'),
+              //       maxLines: 1,
+              //       overflow: TextOverflow.ellipsis,
+              //       style: TextStyle(fontSize: 14, color: fiberchatGrey),
+              //     ),
+              //   ),
+              // ),
               if (IsShowLanguageChangeButtonInSettings == true &&
                   Language.languageList().length > 1)
                 ListTile(
@@ -681,228 +679,228 @@ class _SettingsOptionState extends State<SettingsOption> {
                     ),
                   ),
                 ),
-              ListTile(
-                onTap: () {
-                  showModalBottomSheet(
-                      backgroundColor: Thm.isDarktheme(widget.prefs)
-                          ? fiberchatDIALOGColorDarkMode
-                          : fiberchatDIALOGColorLightMode,
-                      isScrollControlled: true,
-                      context: context,
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(25.0)),
-                      ),
-                      builder: (BuildContext context) {
-                        return Container(
-                          height: 220,
-                          child: Padding(
-                            padding: const EdgeInsets.all(28.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.check_circle_outline_rounded,
-                                    color: fiberchatGreenColor400, size: 45),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Text(
-                                  getTranslated(context, 'backupdesc'),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      height: 1.3, color: fiberchatGrey),
-                                )
-                              ],
-                            ),
-                          ),
-                        );
-                      });
-                },
-                contentPadding: EdgeInsets.fromLTRB(30, 3, 10, 3),
-                leading: Padding(
-                  padding: const EdgeInsets.only(top: 3),
-                  child: Icon(
-                    Icons.cloud_upload_outlined,
-                    color: fiberchatPRIMARYcolor.withOpacity(0.85),
-                    size: 25,
-                  ),
-                ),
-                title: Text(
-                  getTranslated(context, 'backup'),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: pickTextColorBasedOnBgColorAdvanced(
-                          Thm.isDarktheme(widget.prefs)
-                              ? fiberchatBACKGROUNDcolorDarkMode
-                              : fiberchatBACKGROUNDcolorLightMode)),
-                ),
-                subtitle: Padding(
-                  padding: const EdgeInsets.only(top: 4),
-                  child: Text(
-                    getTranslated(context, 'backupshort'),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 14, color: fiberchatGrey),
-                  ),
-                ),
-              ),
-              ListTile(
-                onTap: () {
-                  Navigator.push(
-                      this.context,
-                      new MaterialPageRoute(
-                          builder: (context) => AllNotifications(
-                                prefs: widget.prefs,
-                              )));
-                },
-                contentPadding: EdgeInsets.fromLTRB(30, 3, 10, 3),
-                leading: Padding(
-                  padding: const EdgeInsets.only(top: 3),
-                  child: Icon(
-                    Icons.notifications_none,
-                    color: fiberchatPRIMARYcolor.withOpacity(0.85),
-                    size: 29,
-                  ),
-                ),
-                title: Text(
-                  getTranslated(context, 'pmtevents'),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: pickTextColorBasedOnBgColorAdvanced(
-                          Thm.isDarktheme(widget.prefs)
-                              ? fiberchatBACKGROUNDcolorDarkMode
-                              : fiberchatBACKGROUNDcolorLightMode)),
-                ),
-                subtitle: Padding(
-                  padding: const EdgeInsets.only(top: 4),
-                  child: Text(
-                    getTranslated(context, 'allnotifications'),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 14, color: fiberchatGrey),
-                  ),
-                ),
-              ),
-              ListTile(
-                onTap: () {
-                  if (ConnectWithAdminApp == false) {
-                    custom_url_launcher(TERMS_CONDITION_URL);
-                  } else {
-                    final observer =
-                        Provider.of<Observer>(context, listen: false);
-                    if (observer.tncType == 'url') {
-                      if (observer.tnc == null) {
-                        custom_url_launcher(TERMS_CONDITION_URL);
-                      } else {
-                        custom_url_launcher(observer.tnc!);
-                      }
-                    } else if (observer.tncType == 'file') {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute<dynamic>(
-                          builder: (_) => PDFViewerCachedFromUrl(
-                            prefs: widget.prefs,
-                            title: getTranslated(context, 'tnc'),
-                            url: observer.tnc,
-                            isregistered: true,
-                          ),
-                        ),
-                      );
-                    }
-                  }
-                },
-                contentPadding: EdgeInsets.fromLTRB(30, 3, 10, 3),
-                leading: Padding(
-                  padding: const EdgeInsets.only(top: 6),
-                  child: Icon(
-                    Icons.help_outline,
-                    color: fiberchatPRIMARYcolor.withOpacity(0.85),
-                    size: 26,
-                  ),
-                ),
-                title: Text(
-                  getTranslated(context, 'tnc'),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: pickTextColorBasedOnBgColorAdvanced(
-                          Thm.isDarktheme(widget.prefs)
-                              ? fiberchatBACKGROUNDcolorDarkMode
-                              : fiberchatBACKGROUNDcolorLightMode)),
-                ),
-                subtitle: Padding(
-                  padding: const EdgeInsets.only(top: 4),
-                  child: Text(
-                    getTranslated(context, 'abiderules'),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 14, color: fiberchatGrey),
-                  ),
-                ),
-              ),
-              ListTile(
-                onTap: () {
-                  final observer =
-                      Provider.of<Observer>(context, listen: false);
-                  if (ConnectWithAdminApp == false) {
-                    custom_url_launcher(PRIVACY_POLICY_URL);
-                  } else {
-                    if (observer.privacypolicyType == 'url') {
-                      if (observer.privacypolicy == null) {
-                        custom_url_launcher(PRIVACY_POLICY_URL);
-                      } else {
-                        custom_url_launcher(observer.privacypolicy!);
-                      }
-                    } else if (observer.privacypolicyType == 'file') {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute<dynamic>(
-                          builder: (_) => PDFViewerCachedFromUrl(
-                            prefs: widget.prefs,
-                            title: getTranslated(context, 'pp'),
-                            url: observer.privacypolicy,
-                            isregistered: true,
-                          ),
-                        ),
-                      );
-                    }
-                  }
-                },
-                contentPadding: EdgeInsets.fromLTRB(30, 3, 10, 3),
-                leading: Padding(
-                  padding: const EdgeInsets.only(top: 6),
-                  child: Icon(
-                    Icons.lock_outline_rounded,
-                    color: fiberchatPRIMARYcolor.withOpacity(0.85),
-                    size: 26,
-                  ),
-                ),
-                title: Text(
-                  getTranslated(context, 'pp'),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: pickTextColorBasedOnBgColorAdvanced(
-                          Thm.isDarktheme(widget.prefs)
-                              ? fiberchatBACKGROUNDcolorDarkMode
-                              : fiberchatBACKGROUNDcolorLightMode)),
-                ),
-                subtitle: Padding(
-                  padding: const EdgeInsets.only(top: 4),
-                  child: Text(
-                    getTranslated(context, 'processdata'),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 14, color: fiberchatGrey),
-                  ),
-                ),
-              ),
+              // ListTile(
+              //   onTap: () {
+              //     showModalBottomSheet(
+              //         backgroundColor: Thm.isDarktheme(widget.prefs)
+              //             ? fiberchatDIALOGColorDarkMode
+              //             : fiberchatDIALOGColorLightMode,
+              //         isScrollControlled: true,
+              //         context: context,
+              //         shape: RoundedRectangleBorder(
+              //           borderRadius:
+              //               BorderRadius.vertical(top: Radius.circular(25.0)),
+              //         ),
+              //         builder: (BuildContext context) {
+              //           return Container(
+              //             height: 220,
+              //             child: Padding(
+              //               padding: const EdgeInsets.all(28.0),
+              //               child: Column(
+              //                 mainAxisAlignment: MainAxisAlignment.center,
+              //                 children: [
+              //                   Icon(Icons.check_circle_outline_rounded,
+              //                       color: fiberchatGreenColor400, size: 45),
+              //                   SizedBox(
+              //                     height: 20,
+              //                   ),
+              //                   Text(
+              //                     getTranslated(context, 'backupdesc'),
+              //                     textAlign: TextAlign.center,
+              //                     style: TextStyle(
+              //                         height: 1.3, color: fiberchatGrey),
+              //                   )
+              //                 ],
+              //               ),
+              //             ),
+              //           );
+              //         });
+              //   },
+              //   contentPadding: EdgeInsets.fromLTRB(30, 3, 10, 3),
+              //   leading: Padding(
+              //     padding: const EdgeInsets.only(top: 3),
+              //     child: Icon(
+              //       Icons.cloud_upload_outlined,
+              //       color: fiberchatPRIMARYcolor.withOpacity(0.85),
+              //       size: 25,
+              //     ),
+              //   ),
+              //   title: Text(
+              //     getTranslated(context, 'backup'),
+              //     maxLines: 1,
+              //     overflow: TextOverflow.ellipsis,
+              //     style: TextStyle(
+              //         fontSize: 16,
+              //         color: pickTextColorBasedOnBgColorAdvanced(
+              //             Thm.isDarktheme(widget.prefs)
+              //                 ? fiberchatBACKGROUNDcolorDarkMode
+              //                 : fiberchatBACKGROUNDcolorLightMode)),
+              //   ),
+              //   subtitle: Padding(
+              //     padding: const EdgeInsets.only(top: 4),
+              //     child: Text(
+              //       getTranslated(context, 'backupshort'),
+              //       maxLines: 1,
+              //       overflow: TextOverflow.ellipsis,
+              //       style: TextStyle(fontSize: 14, color: fiberchatGrey),
+              //     ),
+              //   ),
+              // ),
+              // ListTile(
+              //   onTap: () {
+              //     Navigator.push(
+              //         this.context,
+              //         new MaterialPageRoute(
+              //             builder: (context) => AllNotifications(
+              //                   prefs: widget.prefs,
+              //                 )));
+              //   },
+              //   contentPadding: EdgeInsets.fromLTRB(30, 3, 10, 3),
+              //   leading: Padding(
+              //     padding: const EdgeInsets.only(top: 3),
+              //     child: Icon(
+              //       Icons.notifications_none,
+              //       color: fiberchatPRIMARYcolor.withOpacity(0.85),
+              //       size: 29,
+              //     ),
+              //   ),
+              //   title: Text(
+              //     getTranslated(context, 'pmtevents'),
+              //     maxLines: 1,
+              //     overflow: TextOverflow.ellipsis,
+              //     style: TextStyle(
+              //         fontSize: 16,
+              //         color: pickTextColorBasedOnBgColorAdvanced(
+              //             Thm.isDarktheme(widget.prefs)
+              //                 ? fiberchatBACKGROUNDcolorDarkMode
+              //                 : fiberchatBACKGROUNDcolorLightMode)),
+              //   ),
+              //   subtitle: Padding(
+              //     padding: const EdgeInsets.only(top: 4),
+              //     child: Text(
+              //       getTranslated(context, 'allnotifications'),
+              //       maxLines: 1,
+              //       overflow: TextOverflow.ellipsis,
+              //       style: TextStyle(fontSize: 14, color: fiberchatGrey),
+              //     ),
+              //   ),
+              // ),
+              // ListTile(
+              //   onTap: () {
+              //     if (ConnectWithAdminApp == false) {
+              //       custom_url_launcher(TERMS_CONDITION_URL);
+              //     } else {
+              //       final observer =
+              //           Provider.of<Observer>(context, listen: false);
+              //       if (observer.tncType == 'url') {
+              //         if (observer.tnc == null) {
+              //           custom_url_launcher(TERMS_CONDITION_URL);
+              //         } else {
+              //           custom_url_launcher(observer.tnc!);
+              //         }
+              //       } else if (observer.tncType == 'file') {
+              //         Navigator.push(
+              //           context,
+              //           MaterialPageRoute<dynamic>(
+              //             builder: (_) => PDFViewerCachedFromUrl(
+              //               prefs: widget.prefs,
+              //               title: getTranslated(context, 'tnc'),
+              //               url: observer.tnc,
+              //               isregistered: true,
+              //             ),
+              //           ),
+              //         );
+              //       }
+              //     }
+              //   },
+              //   contentPadding: EdgeInsets.fromLTRB(30, 3, 10, 3),
+              //   leading: Padding(
+              //     padding: const EdgeInsets.only(top: 6),
+              //     child: Icon(
+              //       Icons.help_outline,
+              //       color: fiberchatPRIMARYcolor.withOpacity(0.85),
+              //       size: 26,
+              //     ),
+              //   ),
+              //   title: Text(
+              //     getTranslated(context, 'tnc'),
+              //     maxLines: 1,
+              //     overflow: TextOverflow.ellipsis,
+              //     style: TextStyle(
+              //         fontSize: 16,
+              //         color: pickTextColorBasedOnBgColorAdvanced(
+              //             Thm.isDarktheme(widget.prefs)
+              //                 ? fiberchatBACKGROUNDcolorDarkMode
+              //                 : fiberchatBACKGROUNDcolorLightMode)),
+              //   ),
+              //   subtitle: Padding(
+              //     padding: const EdgeInsets.only(top: 4),
+              //     child: Text(
+              //       getTranslated(context, 'abiderules'),
+              //       maxLines: 1,
+              //       overflow: TextOverflow.ellipsis,
+              //       style: TextStyle(fontSize: 14, color: fiberchatGrey),
+              //     ),
+              //   ),
+              // ),
+              // ListTile(
+              //   onTap: () {
+              //     final observer =
+              //         Provider.of<Observer>(context, listen: false);
+              //     if (ConnectWithAdminApp == false) {
+              //       custom_url_launcher(PRIVACY_POLICY_URL);
+              //     } else {
+              //       if (observer.privacypolicyType == 'url') {
+              //         if (observer.privacypolicy == null) {
+              //           custom_url_launcher(PRIVACY_POLICY_URL);
+              //         } else {
+              //           custom_url_launcher(observer.privacypolicy!);
+              //         }
+              //       } else if (observer.privacypolicyType == 'file') {
+              //         Navigator.push(
+              //           context,
+              //           MaterialPageRoute<dynamic>(
+              //             builder: (_) => PDFViewerCachedFromUrl(
+              //               prefs: widget.prefs,
+              //               title: getTranslated(context, 'pp'),
+              //               url: observer.privacypolicy,
+              //               isregistered: true,
+              //             ),
+              //           ),
+              //         );
+              //       }
+              //     }
+              //   },
+              //   contentPadding: EdgeInsets.fromLTRB(30, 3, 10, 3),
+              //   leading: Padding(
+              //     padding: const EdgeInsets.only(top: 6),
+              //     child: Icon(
+              //       Icons.lock_outline_rounded,
+              //       color: fiberchatPRIMARYcolor.withOpacity(0.85),
+              //       size: 26,
+              //     ),
+              //   ),
+              //   title: Text(
+              //     getTranslated(context, 'pp'),
+              //     maxLines: 1,
+              //     overflow: TextOverflow.ellipsis,
+              //     style: TextStyle(
+              //         fontSize: 16,
+              //         color: pickTextColorBasedOnBgColorAdvanced(
+              //             Thm.isDarktheme(widget.prefs)
+              //                 ? fiberchatBACKGROUNDcolorDarkMode
+              //                 : fiberchatBACKGROUNDcolorLightMode)),
+              //   ),
+              //   subtitle: Padding(
+              //     padding: const EdgeInsets.only(top: 4),
+              //     child: Text(
+              //       getTranslated(context, 'processdata'),
+              //       maxLines: 1,
+              //       overflow: TextOverflow.ellipsis,
+              //       style: TextStyle(fontSize: 14, color: fiberchatGrey),
+              //     ),
+              //   ),
+              // ),
               ListTile(
                 onTap: () {
                   showModalBottomSheet(

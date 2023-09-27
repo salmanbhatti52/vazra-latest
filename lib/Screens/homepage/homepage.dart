@@ -3,59 +3,60 @@
 import 'dart:async';
 import 'dart:core';
 import 'dart:io';
+
 import 'package:async/async.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:fiberchat/Configs/Dbkeys.dart';
 import 'package:fiberchat/Configs/Dbpaths.dart';
+import 'package:fiberchat/Configs/app_constants.dart';
 import 'package:fiberchat/Configs/optional_constants.dart';
+import 'package:fiberchat/Models/DataModel.dart';
 import 'package:fiberchat/Screens/Broadcast/AddContactsToBroadcast.dart';
 import 'package:fiberchat/Screens/Groups/AddContactsToGroup.dart';
 import 'package:fiberchat/Screens/SettingsOption/settingsOption.dart';
+import 'package:fiberchat/Screens/auth_screens/login.dart';
+import 'package:fiberchat/Screens/call_history/callhistory.dart';
+import 'package:fiberchat/Screens/calling_screen/pickup_layout.dart';
 import 'package:fiberchat/Screens/homepage/Setupdata.dart';
 import 'package:fiberchat/Screens/notifications/AllNotifications.dart';
+import 'package:fiberchat/Screens/profile_settings/profileSettings.dart';
 import 'package:fiberchat/Screens/recent_chats/RecentChatsWithoutLastMessage.dart';
+import 'package:fiberchat/Screens/recent_chats/RecentsChats.dart';
 import 'package:fiberchat/Screens/search_chats/SearchRecentChat.dart';
 import 'package:fiberchat/Screens/sharing_intent/SelectContactToShare.dart';
 import 'package:fiberchat/Screens/splash_screen/splash_screen.dart';
 import 'package:fiberchat/Screens/status/status.dart';
-import 'package:fiberchat/Services/Providers/SmartContactProviderWithLocalStoreData.dart';
 import 'package:fiberchat/Services/Providers/Observer.dart';
+import 'package:fiberchat/Services/Providers/SmartContactProviderWithLocalStoreData.dart';
 import 'package:fiberchat/Services/Providers/StatusProvider.dart';
 import 'package:fiberchat/Services/Providers/call_history_provider.dart';
+import 'package:fiberchat/Services/Providers/currentchat_peer.dart';
+import 'package:fiberchat/Services/Providers/user_provider.dart';
 import 'package:fiberchat/Services/localization/language.dart';
+import 'package:fiberchat/Services/localization/language_constants.dart';
 import 'package:fiberchat/Utils/color_detector.dart';
 import 'package:fiberchat/Utils/custom_url_launcher.dart';
 import 'package:fiberchat/Utils/error_codes.dart';
 import 'package:fiberchat/Utils/phonenumberVariantsGenerator.dart';
 import 'package:fiberchat/Utils/theme_management.dart';
+import 'package:fiberchat/Utils/unawaited.dart';
+import 'package:fiberchat/Utils/utils.dart';
+import 'package:fiberchat/main.dart';
 import 'package:fiberchat/widgets/DynamicBottomSheet/dynamic_modal_bottomsheet.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart'
     as local;
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:fiberchat/Configs/app_constants.dart';
-import 'package:fiberchat/Screens/auth_screens/login.dart';
-import 'package:fiberchat/Services/Providers/currentchat_peer.dart';
-import 'package:fiberchat/Services/localization/language_constants.dart';
-import 'package:fiberchat/Screens/profile_settings/profileSettings.dart';
-import 'package:fiberchat/main.dart';
-import 'package:fiberchat/Screens/recent_chats/RecentsChats.dart';
-import 'package:fiberchat/Screens/call_history/callhistory.dart';
-import 'package:fiberchat/Models/DataModel.dart';
-import 'package:fiberchat/Services/Providers/user_provider.dart';
-import 'package:fiberchat/Screens/calling_screen/pickup_layout.dart';
-import 'package:fiberchat/Utils/utils.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:receive_sharing_intent/receive_sharing_intent.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:local_auth/local_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:fiberchat/Utils/unawaited.dart';
 
 class Homepage extends StatefulWidget {
   Homepage(
@@ -1002,9 +1003,9 @@ class HomepageState extends State<Homepage>
                                                       ? AppLogoPathDarkModeLogo
                                                       : AppLogoPathLightModeLogo
                                                   : AppLogoPathDarkModeLogo,
-	height: 80,
+                                              height: 80,
                                               width: 140,
-	fit: BoxFit.fitHeight),
+                                              fit: BoxFit.fitHeight),
                                         ),
                                   titleSpacing:
                                       IsShowAppLogoInHomepage ? 10 : 17,
@@ -1353,33 +1354,33 @@ class HomepageState extends State<Homepage>
                                                           : fiberchatDIALOGColorLightMode),
                                                     ),
                                                   )),
-                                              PopupMenuItem<String>(
-                                                  value: 'broadcast',
-                                                  child: Text(
-                                                    getTranslated(context,
-                                                        'newbroadcast'),
-                                                    style: TextStyle(
-                                                      color: pickTextColorBasedOnBgColorAdvanced(Thm
-                                                              .isDarktheme(
-                                                                  widget.prefs)
-                                                          ? fiberchatDIALOGColorDarkMode
-                                                          : fiberchatDIALOGColorLightMode),
-                                                    ),
-                                                  )),
-                                              PopupMenuItem<String>(
-                                                value: 'tutorials',
-                                                child: Text(
-                                                  getTranslated(
-                                                      context, 'tutorials'),
-                                                  style: TextStyle(
-                                                    color: pickTextColorBasedOnBgColorAdvanced(Thm
-                                                            .isDarktheme(
-                                                                widget.prefs)
-                                                        ? fiberchatDIALOGColorDarkMode
-                                                        : fiberchatDIALOGColorLightMode),
-                                                  ),
-                                                ),
-                                              ),
+                                              // PopupMenuItem<String>(
+                                              //     value: 'broadcast',
+                                              //     child: Text(
+                                              //       getTranslated(context,
+                                              //           'newbroadcast'),
+                                              //       style: TextStyle(
+                                              //         color: pickTextColorBasedOnBgColorAdvanced(Thm
+                                              //                 .isDarktheme(
+                                              //                     widget.prefs)
+                                              //             ? fiberchatDIALOGColorDarkMode
+                                              //             : fiberchatDIALOGColorLightMode),
+                                              //       ),
+                                              //     )),
+                                              // PopupMenuItem<String>(
+                                              //   value: 'tutorials',
+                                              //   child: Text(
+                                              //     getTranslated(
+                                              //         context, 'tutorials'),
+                                              //     style: TextStyle(
+                                              //       color: pickTextColorBasedOnBgColorAdvanced(Thm
+                                              //               .isDarktheme(
+                                              //                   widget.prefs)
+                                              //           ? fiberchatDIALOGColorDarkMode
+                                              //           : fiberchatDIALOGColorLightMode),
+                                              //     ),
+                                              //   ),
+                                              // ),
                                               PopupMenuItem<String>(
                                                   value: 'settings',
                                                   child: Text(

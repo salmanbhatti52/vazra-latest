@@ -2,97 +2,96 @@
 
 import 'dart:async';
 import 'dart:convert';
-
 import 'dart:io';
-import 'package:fiberchat/Screens/homepage/Setupdata.dart';
-import 'package:gif/gif.dart';
-import 'package:fiberchat/Services/Providers/SmartContactProviderWithLocalStoreData.dart';
-import 'package:fiberchat/Services/localization/language.dart';
-import 'package:fiberchat/Utils/color_detector.dart';
-import 'package:fiberchat/Utils/custom_url_launcher.dart';
-import 'package:fiberchat/Utils/setStatusBarColor.dart';
-import 'package:fiberchat/Utils/theme_management.dart';
-import 'package:fiberchat/widgets/AllinOneCameraGalleryImageVideoPicker/AllinOneCameraGalleryImageVideoPicker.dart';
-import 'package:fiberchat/widgets/CameraGalleryImagePicker/camera_image_gallery_picker.dart';
-import 'package:fiberchat/widgets/CameraGalleryImagePicker/multiMediaPicker.dart';
-import 'package:fiberchat/widgets/DownloadManager/download_all_file_type.dart';
-import 'package:fiberchat/widgets/DynamicBottomSheet/dynamic_modal_bottomsheet.dart';
-import 'package:fiberchat/widgets/VideoEditor/video_editor.dart';
-import 'package:path/path.dart' as p;
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart' as emojipic;
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
-import 'package:fiberchat/Configs/app_constants.dart';
-import 'package:fiberchat/Configs/optional_constants.dart';
-import 'package:fiberchat/Screens/auth_screens/login.dart';
-import 'package:fiberchat/Screens/chat_screen/utils/aes_encryption.dart';
-import 'package:fiberchat/Screens/chat_screen/utils/uploadMediaWithProgress.dart';
-import 'package:fiberchat/Screens/contact_screens/SelectContactsToForward.dart';
-import 'package:fiberchat/Screens/security_screens/security.dart';
-import 'package:fiberchat/Services/Admob/admob.dart';
-import 'package:fiberchat/Utils/emoji_detect.dart';
-import 'package:fiberchat/Utils/mime_type.dart';
-import 'package:fiberchat/main.dart';
-import 'package:fiberchat/widgets/CountryPicker/CountryCode.dart';
+import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:fiberchat/Configs/Dbkeys.dart';
 import 'package:fiberchat/Configs/Dbpaths.dart';
+import 'package:fiberchat/Configs/Enum.dart';
+import 'package:fiberchat/Configs/app_constants.dart';
+import 'package:fiberchat/Configs/optional_constants.dart';
+import 'package:fiberchat/Models/DataModel.dart';
+import 'package:fiberchat/Models/E2EE/e2ee.dart' as e2ee;
+import 'package:fiberchat/Screens/auth_screens/login.dart';
+import 'package:fiberchat/Screens/call_history/callhistory.dart';
+import 'package:fiberchat/Screens/calling_screen/pickup_layout.dart';
+import 'package:fiberchat/Screens/chat_screen/Widget/bubble.dart';
+import 'package:fiberchat/Screens/chat_screen/utils/aes_encryption.dart';
+import 'package:fiberchat/Screens/chat_screen/utils/audioPlayback.dart';
 import 'package:fiberchat/Screens/chat_screen/utils/deleteChatMedia.dart';
+import 'package:fiberchat/Screens/chat_screen/utils/message.dart';
+import 'package:fiberchat/Screens/chat_screen/utils/photo_view.dart';
+import 'package:fiberchat/Screens/chat_screen/utils/uploadMediaWithProgress.dart';
+import 'package:fiberchat/Screens/contact_screens/ContactsSelect.dart';
+import 'package:fiberchat/Screens/contact_screens/SelectContactsToForward.dart';
+import 'package:fiberchat/Screens/homepage/Setupdata.dart';
 import 'package:fiberchat/Screens/privacypolicy&TnC/PdfViewFromCachedUrl.dart';
+import 'package:fiberchat/Screens/profile_settings/profile_view.dart';
+import 'package:fiberchat/Screens/security_screens/security.dart';
+import 'package:fiberchat/Services/Admob/admob.dart';
 import 'package:fiberchat/Services/Providers/Observer.dart';
+import 'package:fiberchat/Services/Providers/SmartContactProviderWithLocalStoreData.dart';
+import 'package:fiberchat/Services/Providers/currentchat_peer.dart';
+import 'package:fiberchat/Services/Providers/seen_provider.dart';
+import 'package:fiberchat/Services/Providers/seen_state.dart';
+import 'package:fiberchat/Services/localization/language.dart';
+import 'package:fiberchat/Services/localization/language_constants.dart';
+import 'package:fiberchat/Utils/call_utilities.dart';
+import 'package:fiberchat/Utils/chat_controller.dart';
+import 'package:fiberchat/Utils/color_detector.dart';
+import 'package:fiberchat/Utils/crc.dart';
+import 'package:fiberchat/Utils/custom_url_launcher.dart';
+import 'package:fiberchat/Utils/emoji_detect.dart';
+import 'package:fiberchat/Utils/mime_type.dart';
+import 'package:fiberchat/Utils/open_settings.dart';
+import 'package:fiberchat/Utils/permissions.dart';
+import 'package:fiberchat/Utils/save.dart';
+import 'package:fiberchat/Utils/setStatusBarColor.dart';
+import 'package:fiberchat/Utils/theme_management.dart';
+import 'package:fiberchat/Utils/unawaited.dart';
+import 'package:fiberchat/Utils/utils.dart';
+import 'package:fiberchat/main.dart';
+import 'package:fiberchat/widgets/AllinOneCameraGalleryImageVideoPicker/AllinOneCameraGalleryImageVideoPicker.dart';
+import 'package:fiberchat/widgets/AudioRecorder/Audiorecord.dart';
+import 'package:fiberchat/widgets/CameraGalleryImagePicker/camera_image_gallery_picker.dart';
+import 'package:fiberchat/widgets/CameraGalleryImagePicker/multiMediaPicker.dart';
+import 'package:fiberchat/widgets/CountryPicker/CountryCode.dart';
+import 'package:fiberchat/widgets/DownloadManager/download_all_file_type.dart';
+import 'package:fiberchat/widgets/DynamicBottomSheet/dynamic_modal_bottomsheet.dart';
+import 'package:fiberchat/widgets/ImagePicker/image_picker.dart';
 import 'package:fiberchat/widgets/MultiDocumentPicker/multiDocumentPicker.dart';
 import 'package:fiberchat/widgets/MyElevatedButton/MyElevatedButton.dart';
 import 'package:fiberchat/widgets/SoundPlayer/SoundPlayerPro.dart';
-import 'package:fiberchat/Services/Providers/currentchat_peer.dart';
-import 'package:fiberchat/Services/localization/language_constants.dart';
-import 'package:fiberchat/Screens/call_history/callhistory.dart';
-import 'package:fiberchat/Screens/chat_screen/utils/audioPlayback.dart';
-import 'package:fiberchat/Screens/chat_screen/utils/message.dart';
-import 'package:fiberchat/Screens/contact_screens/ContactsSelect.dart';
-import 'package:fiberchat/Models/DataModel.dart';
-import 'package:fiberchat/Screens/chat_screen/utils/photo_view.dart';
-import 'package:fiberchat/Screens/profile_settings/profile_view.dart';
-import 'package:fiberchat/Services/Providers/seen_provider.dart';
-import 'package:fiberchat/Services/Providers/seen_state.dart';
-import 'package:fiberchat/Screens/calling_screen/pickup_layout.dart';
-import 'package:fiberchat/Utils/call_utilities.dart';
-import 'package:fiberchat/Utils/permissions.dart';
-import 'package:fiberchat/Utils/chat_controller.dart';
-import 'package:fiberchat/Utils/crc.dart';
-import 'package:fiberchat/Utils/open_settings.dart';
-import 'package:fiberchat/Utils/save.dart';
-import 'package:fiberchat/Utils/utils.dart';
-import 'package:fiberchat/widgets/AudioRecorder/Audiorecord.dart';
-import 'package:fiberchat/widgets/ImagePicker/image_picker.dart';
+import 'package:fiberchat/widgets/VideoEditor/video_editor.dart';
 import 'package:fiberchat/widgets/VideoPicker/VideoPreview.dart';
-import 'package:fiberchat/Screens/chat_screen/Widget/bubble.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:giphy_get/giphy_get.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:intl/intl.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:gif/gif.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:intl/intl.dart';
 import 'package:link_preview_generator/link_preview_generator.dart';
 import 'package:media_info/media_info.dart';
 import 'package:path/path.dart';
+import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:receive_sharing_intent/receive_sharing_intent.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fiberchat/Models/E2EE/e2ee.dart' as e2ee;
-import 'package:fiberchat/Utils/unawaited.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:flutter/services.dart';
-import 'package:encrypt/encrypt.dart' as encrypt;
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart' as emojipic;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_compress/video_compress.dart' as compress;
 import 'package:video_thumbnail/video_thumbnail.dart';
-import 'package:fiberchat/Configs/Enum.dart';
 
 hidekeyboard(BuildContext context) {
   FocusScope.of(context).requestFocus(FocusNode());
@@ -124,7 +123,8 @@ class ChatScreen extends StatefulWidget {
   State createState() => new _ChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver, TickerProviderStateMixin  {
+class _ChatScreenState extends State<ChatScreen>
+    with WidgetsBindingObserver, TickerProviderStateMixin {
   GlobalKey<ScaffoldState> _scaffold = new GlobalKey<ScaffoldState>();
   bool isDeleteChatManually = false;
   bool isReplyKeyboard = false;
@@ -4438,7 +4438,8 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver, Ti
                                     ? SizedBox(
                                         width: 0,
                                       )
-                                    : Container(
+                                    :
+                                Container(
                                         margin: EdgeInsets.only(bottom: 5),
                                         height: 35,
                                         alignment: Alignment.topLeft,
@@ -4462,77 +4463,92 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver, Ti
                                                                 'mediamssgnotallowed'));
                                                       }
                                                     : () async {
-                                              showModalBottomSheet(
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return Container(
+                                                        showModalBottomSheet(
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return Container(
+                                                                  child: GridView
+                                                                      .builder(
+                                                                itemCount:
+                                                                    linksGifs
+                                                                        .length,
+                                                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                                                    crossAxisCount:
+                                                                        2,
+                                                                    crossAxisSpacing:
+                                                                        10.0,
+                                                                    mainAxisSpacing:
+                                                                        10.0),
+                                                                itemBuilder:
+                                                                    (BuildContext
+                                                                            context,
+                                                                        int index) {
+                                                                  return GestureDetector(
+                                                                    child:
+                                                                        Container(
+                                                                      padding:
+                                                                          EdgeInsets
+                                                                              .symmetric(
+                                                                        horizontal:
+                                                                            20,
+                                                                        vertical:
+                                                                            20,
+                                                                      ),
+                                                                      child:
+                                                                          Gif(
+                                                                        height:
+                                                                            5,
+                                                                        width:
+                                                                            5,
 
-                                                        child: GridView
-                                                            .builder(
-                                                          itemCount:
-                                                          linksGifs
-                                                              .length,
-                                                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                                              crossAxisCount:
-                                                              2,
-                                                              crossAxisSpacing:
-                                                              10.0,
-                                                              mainAxisSpacing:
-                                                              10.0),
-                                                          itemBuilder:
-                                                              (BuildContext
-                                                          context,
-                                                              int index) {
-                                                            return GestureDetector(
-                                                              child: Container(
-                                                                padding: EdgeInsets.symmetric(
-                                                                  horizontal:20,vertical:20,
-                                                                ),
-
-
-                                                                child:Gif(
-                                                                  height: 5,width: 5,
-
-                                                                  fit: BoxFit.scaleDown,
-                                                                  image: NetworkImage(
-                                                                    '${linksGifs[index]}',),
-                                                                  controller:
-                                                                  gifController, // if duration and fps is null, original gif fps will be used.
-                                                                  //fps: 30,
-                                                                  //duration: const Duration(seconds: 3),
-                                                                  autostart:
-                                                                  Autostart
-                                                                      .no,
-                                                                  // placeholder: (context) => const Text('Loading...'),
-                                                                  onFetchCompleted:
-                                                                      () {
-                                                                    gifController
-                                                                        ?.reset();
-                                                                    gifController
-                                                                        ?.forward();
-                                                                  },
-                                                                ),),
-                                                              onTap: () {
-                                                                if (gifController !=
-                                                                    null &&
-                                                                    mounted) {
-                                                                  onSendMessage(
-                                                                      context,
-                                                                      linksGifs[index]!,
-                                                                      MessageType.image,
-                                                                      DateTime.now().millisecondsSinceEpoch);
-                                                                  hidekeyboard(
-                                                                      context);
-                                                                  setStateIfMounted(
-                                                                          () {});
-                                                                  Navigator.of(context).pop();
-                                                                }
-                                                              },
-                                                            );
-                                                          },
-                                                        ));
-                                                  });
-                                            }),
+                                                                        fit: BoxFit
+                                                                            .scaleDown,
+                                                                        image:
+                                                                            NetworkImage(
+                                                                          '${linksGifs[index]}',
+                                                                        ),
+                                                                        controller:
+                                                                            gifController, // if duration and fps is null, original gif fps will be used.
+                                                                        //fps: 30,
+                                                                        //duration: const Duration(seconds: 3),
+                                                                        autostart:
+                                                                            Autostart.no,
+                                                                        // placeholder: (context) => const Text('Loading...'),
+                                                                        onFetchCompleted:
+                                                                            () {
+                                                                          gifController
+                                                                              ?.reset();
+                                                                          gifController
+                                                                              ?.forward();
+                                                                        },
+                                                                      ),
+                                                                    ),
+                                                                    onTap: () {
+                                                                      print(
+                                                                          "msg coming ${linksGifs[index]}");
+                                                                      onSendMessage(
+                                                                          context,
+                                                                          linksGifs[index]!,
+                                                                          MessageType.image,
+                                                                          DateTime.now().millisecondsSinceEpoch);
+                                                                      hidekeyboard(
+                                                                          context);
+                                                                      setStateIfMounted(
+                                                                              () {});
+                                                                      Navigator.of(context)
+                                                                          .pop();
+                                                                      // if (gifController !=
+                                                                      //         null &&
+                                                                      //     mounted) {
+                                                                      //
+                                                                      //
+                                                                      // }
+                                                                    },
+                                                                  );
+                                                                },
+                                                              ));
+                                                            });
+                                                      }),
                                       ),
                               ],
                             ))
@@ -6240,20 +6256,20 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver, Ti
                                                     ),
                                                   ),
 
-                                                  PopupMenuItem<String>(
-                                                    value: 'deleteall',
-                                                    child: Text(
-                                                      '${getTranslated(this.context, 'deleteallchats')}',
-                                                      style: TextStyle(
-                                                        color: pickTextColorBasedOnBgColorAdvanced(Thm
-                                                                .isDarktheme(
-                                                                    widget
-                                                                        .prefs)
-                                                            ? fiberchatDIALOGColorDarkMode
-                                                            : fiberchatDIALOGColorLightMode),
-                                                      ),
-                                                    ),
-                                                  ),
+                                                  // PopupMenuItem<String>(
+                                                  //   value: 'deleteall',
+                                                  //   child: Text(
+                                                  //     '${getTranslated(this.context, 'deleteallchats')}',
+                                                  //     style: TextStyle(
+                                                  //       color: pickTextColorBasedOnBgColorAdvanced(Thm
+                                                  //               .isDarktheme(
+                                                  //                   widget
+                                                  //                       .prefs)
+                                                  //           ? fiberchatDIALOGColorDarkMode
+                                                  //           : fiberchatDIALOGColorLightMode),
+                                                  //     ),
+                                                  //   ),
+                                                  // ),
 
                                                   PopupMenuItem<String>(
                                                     value: hidden
@@ -6271,38 +6287,38 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver, Ti
                                                       ),
                                                     ),
                                                   ),
-                                                  PopupMenuItem<String>(
-                                                    value: locked
-                                                        ? 'unlock'
-                                                        : 'lock',
-                                                    child: Text(
-                                                      '${locked ? getTranslated(this.context, 'unlockchat') : getTranslated(this.context, 'lockchat')}',
-                                                      style: TextStyle(
-                                                        color: pickTextColorBasedOnBgColorAdvanced(Thm
-                                                                .isDarktheme(
-                                                                    widget
-                                                                        .prefs)
-                                                            ? fiberchatDIALOGColorDarkMode
-                                                            : fiberchatDIALOGColorLightMode),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  PopupMenuItem<String>(
-                                                    value: isBlocked()
-                                                        ? 'unblock'
-                                                        : 'block',
-                                                    child: Text(
-                                                      '${isBlocked() ? getTranslated(this.context, 'unblockchat') : getTranslated(this.context, 'blockchat')}',
-                                                      style: TextStyle(
-                                                        color: pickTextColorBasedOnBgColorAdvanced(Thm
-                                                                .isDarktheme(
-                                                                    widget
-                                                                        .prefs)
-                                                            ? fiberchatDIALOGColorDarkMode
-                                                            : fiberchatDIALOGColorLightMode),
-                                                      ),
-                                                    ),
-                                                  ),
+                                                  // PopupMenuItem<String>(
+                                                  //   value: locked
+                                                  //       ? 'unlock'
+                                                  //       : 'lock',
+                                                  //   child: Text(
+                                                  //     '${locked ? getTranslated(this.context, 'unlockchat') : getTranslated(this.context, 'lockchat')}',
+                                                  //     style: TextStyle(
+                                                  //       color: pickTextColorBasedOnBgColorAdvanced(Thm
+                                                  //               .isDarktheme(
+                                                  //                   widget
+                                                  //                       .prefs)
+                                                  //           ? fiberchatDIALOGColorDarkMode
+                                                  //           : fiberchatDIALOGColorLightMode),
+                                                  //     ),
+                                                  //   ),
+                                                  // ),
+                                                  // PopupMenuItem<String>(
+                                                  //   value: isBlocked()
+                                                  //       ? 'unblock'
+                                                  //       : 'block',
+                                                  //   child: Text(
+                                                  //     '${isBlocked() ? getTranslated(this.context, 'unblockchat') : getTranslated(this.context, 'blockchat')}',
+                                                  //     style: TextStyle(
+                                                  //       color: pickTextColorBasedOnBgColorAdvanced(Thm
+                                                  //               .isDarktheme(
+                                                  //                   widget
+                                                  //                       .prefs)
+                                                  //           ? fiberchatDIALOGColorDarkMode
+                                                  //           : fiberchatDIALOGColorLightMode),
+                                                  //     ),
+                                                  //   ),
+                                                  // ),
                                                   peer![Dbkeys.wallpaper] !=
                                                           null
                                                       ? PopupMenuItem<String>(
@@ -6337,20 +6353,20 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver, Ti
                                                                   : fiberchatDIALOGColorLightMode),
                                                             ),
                                                           )),
-                                                  PopupMenuItem<String>(
-                                                    value: 'report',
-                                                    child: Text(
-                                                      '${getTranslated(this.context, 'report')}',
-                                                      style: TextStyle(
-                                                        color: pickTextColorBasedOnBgColorAdvanced(Thm
-                                                                .isDarktheme(
-                                                                    widget
-                                                                        .prefs)
-                                                            ? fiberchatDIALOGColorDarkMode
-                                                            : fiberchatDIALOGColorLightMode),
-                                                      ),
-                                                    ),
-                                                  ),
+                                                  // PopupMenuItem<String>(
+                                                  //   value: 'report',
+                                                  //   child: Text(
+                                                  //     '${getTranslated(this.context, 'report')}',
+                                                  //     style: TextStyle(
+                                                  //       color: pickTextColorBasedOnBgColorAdvanced(Thm
+                                                  //               .isDarktheme(
+                                                  //                   widget
+                                                  //                       .prefs)
+                                                  //           ? fiberchatDIALOGColorDarkMode
+                                                  //           : fiberchatDIALOGColorLightMode),
+                                                  //     ),
+                                                  //   ),
+                                                  // ),
                                                   // ignore: unnecessary_null_comparison
                                                 ].toList())),
                                       ),
