@@ -14,37 +14,6 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
-	<key>CFBundleLocalizations</key>
-	<array>
-		<string>en</string>
-		<string>hi</string>
-		<string>vi</string>
-		<string>ar</string>
-		<string>de</string>
-		<string>es</string>
-		<string>fr</string>
-		<string>id</string>
-		<string>ja</string>
-		<string>ko</string>
-		<string>tr</string>
-		<string>zh</string>
-		<string>nl</string>
-		<string>bn</string>
-		<string>pt</string>
-		<string>ur</string>
-		<string>sw</string>
-		<string>ru</string>
-		<string>fa</string>
-		<string>ka</string>
-		<string>ms</string>
-		<string>zh_HK</string>
-		<string>th</string>
-		<string>ro</string>
-		<string>it</string>
-		<string>af</string>
-		<string>am</string>
-		<string>zu</string>
-	</array>
 	<key>CFBundleName</key>
 	<string>Vazra</string>
 	<key>CFBundlePackageType</key>
@@ -59,8 +28,8 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.googleusercontent.apps.450399040998-upbf37fvhia505dbttepomjli0pqlana</string>
+	<array>
+	<string>com.googleusercontent.apps.450399040998-upbf37fvhia505dbttepomjli0pqlana</string>
 			</array>
 		</dict>
 	</array>
@@ -115,8 +84,6 @@
 			<string>cstr6suwn9.skadnetwork</string>
 		</dict>
 	</array>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
@@ -147,5 +114,38 @@
 	<true/>
 	<key>io.flutter.embedded_views_preview</key>
 	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>CFBundleLocalizations</key>
+<array>
+	<string>en</string>
+	<string>hi</string>
+	<string>vi</string>
+	<string>ar</string>
+	<string>de</string>
+	<string>es</string>
+	<string>fr</string>
+	<string>id</string>
+	<string>ja</string>
+	<string>ko</string>
+	<string>tr</string>
+	<string>zh</string>
+	<string>nl</string>
+	<string>bn</string>
+	<string>pt</string>
+	<string>ur</string>
+	<string>sw</string>
+	<string>ru</string>
+	<string>fa</string>
+	<string>ka</string>
+	<string>ms</string>
+	<string>zh_HK</string>
+	<string>th</string>
+	<string>ro</string>
+	<string>it</string>
+	<string>af</string>
+	<string>am</string>
+	<string>zu</string>
+</array>
 </dict>
 </plist>
