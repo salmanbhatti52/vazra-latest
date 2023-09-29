@@ -39,7 +39,7 @@
           }
         },
         {
-          "client_id": "450399040998-o26r3ctt9decb1p17vkrnfsl9brhh3lu.apps.googleusercontent.com",
+          "client_id": "450399040998-rgirda1at2s4tinb243cf07ct3k87kuc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -56,10 +56,10 @@
               "client_type": 3
             },
             {
-              "client_id": "450399040998-upbf37fvhia505dbttepomjli0pqlana.apps.googleusercontent.com",
+              "client_id": "450399040998-ja58ue1jpajs7eg64tq9gtnqkqq9f2lj.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.fibrechat.app"
+                "bundle_id": "com.vazra.apps"
               }
             }
           ]
@@ -75,7 +75,31 @@
       },
       "oauth_client": [
         {
-          "client_id": "450399040998-o26r3ctt9decb1p17vkrnfsl9brhh3lu.apps.googleusercontent.com",
+          "client_id": "450399040998-g7bfelj00cir14ebrt4a0hojc6jli08n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vazra.app",
+            "certificate_hash": "8918a24d20a792a9a2e71ff71640fe3efb40555a"
+          }
+        },
+        {
+          "client_id": "450399040998-tesa1dkvl5bbd9it8m2cp6a74a6rnq9h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vazra.app",
+            "certificate_hash": "22b212a9fb7b494f8ccdba08f8f8cc47d9345425"
+          }
+        },
+        {
+          "client_id": "450399040998-vel73smcooe2i92fl0nv1ai7pfmglfa2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vazra.app",
+            "certificate_hash": "2c188474ac48034775511d478d55d1790cc2d83c"
+          }
+        },
+        {
+          "client_id": "450399040998-rgirda1at2s4tinb243cf07ct3k87kuc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -92,10 +116,10 @@
               "client_type": 3
             },
             {
-              "client_id": "450399040998-upbf37fvhia505dbttepomjli0pqlana.apps.googleusercontent.com",
+              "client_id": "450399040998-ja58ue1jpajs7eg64tq9gtnqkqq9f2lj.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.fibrechat.app"
+                "bundle_id": "com.vazra.apps"
               }
             }
           ]
@@ -111,7 +135,39 @@
       },
       "oauth_client": [
         {
-          "client_id": "450399040998-o26r3ctt9decb1p17vkrnfsl9brhh3lu.apps.googleusercontent.com",
+          "client_id": "450399040998-2fpujoup8v6fsn6cucmr94tkdgnosme2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vazra.apps",
+            "certificate_hash": "2c188474ac48034775511d478d55d1790cc2d83c"
+          }
+        },
+        {
+          "client_id": "450399040998-jpv4537pmf8hg502ui880hsvaknvm2rs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vazra.apps",
+            "certificate_hash": "597eeee68576318b03a18a469f82c94a0cb13f29"
+          }
+        },
+        {
+          "client_id": "450399040998-pkg6vq180ivr1u21h7p7j7e26tpc6f64.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vazra.apps",
+            "certificate_hash": "8918a24d20a792a9a2e71ff71640fe3efb40555a"
+          }
+        },
+        {
+          "client_id": "450399040998-r81o870aqu9ihnicej8jrq8mntkm5rnq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vazra.apps",
+            "certificate_hash": "22b212a9fb7b494f8ccdba08f8f8cc47d9345425"
+          }
+        },
+        {
+          "client_id": "450399040998-rgirda1at2s4tinb243cf07ct3k87kuc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -128,10 +184,10 @@
               "client_type": 3
             },
             {
-              "client_id": "450399040998-upbf37fvhia505dbttepomjli0pqlana.apps.googleusercontent.com",
+              "client_id": "450399040998-ja58ue1jpajs7eg64tq9gtnqkqq9f2lj.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.fibrechat.app"
+                "bundle_id": "com.vazra.apps"
               }
             }
           ]
