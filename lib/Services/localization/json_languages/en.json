@@ -411,8 +411,8 @@
      "setlang": "Set Language",
      "usecontacts":"Use your Contact List",
      "usecontactsdesc": "To make it easier to connect with Contacts who are available for Chats & Calls. The App uses your Contact list only to suggest the available contacts & to show their Status Stories if available. App does not store or transmit the Contact List to any server.",
-     "declinebutton":"Decline",
-     "agreebutton":"Agree",
+     "declinebutton":"Continue",
+     "agreebutton":"Next",
      "nocontacts":"No Contacts"
 
 
