@@ -79,7 +79,7 @@ class _AudioCallState extends State<AudioCall> {
     super.dispose();
   }
 
-  Stream<DocumentSnapshot>? stream;
+  Stream<DocumentSnapshot<Map<String, dynamic>?>>? stream;
   @override
   void initState() {
     super.initState();
@@ -1114,8 +1114,7 @@ class _AudioCallState extends State<AudioCall> {
                         : fiberchatAPPBARcolorLightMode,
                     body:
                         StreamBuilder<DocumentSnapshot<Map<String, dynamic>?>?>(
-                      stream: stream
-                          as Stream<DocumentSnapshot<Map<String, dynamic>?>?>?,
+                      stream: stream,
                       builder: (BuildContext context, snapshot) {
                         if (snapshot.hasData) {
                           if (snapshot.data == null) {
@@ -1205,8 +1204,7 @@ class _AudioCallState extends State<AudioCall> {
                         : fiberchatAPPBARcolorLightMode,
                     body:
                         StreamBuilder<DocumentSnapshot<Map<String, dynamic>?>?>(
-                      stream: stream
-                          as Stream<DocumentSnapshot<Map<String, dynamic>?>?>?,
+                      stream: stream,
                       builder: (BuildContext context, snapshot) {
                         if (snapshot.hasData) {
                           if (snapshot.data == null) {

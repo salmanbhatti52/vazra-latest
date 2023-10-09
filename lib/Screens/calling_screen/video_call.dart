@@ -45,7 +45,7 @@ class _VideoCallState extends State<VideoCall> {
   int? _remoteUid;
   bool _localUserJoined = false;
   late RtcEngine _engine;
-  Stream<DocumentSnapshot>? stream;
+  Stream<DocumentSnapshot<Map<String, dynamic>?>>? stream;
   @override
   void initState() {
     super.initState();
@@ -727,8 +727,7 @@ class _VideoCallState extends State<VideoCall> {
           return Scaffold(
               backgroundColor: Colors.black,
               body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>?>?>(
-                stream:
-                    stream as Stream<DocumentSnapshot<Map<String, dynamic>?>?>?,
+                stream: stream,
                 builder: (BuildContext context, snapshot) {
                   if (_localUserJoined == false) {
                     return Center(
