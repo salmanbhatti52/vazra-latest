@@ -350,8 +350,91 @@ class _ProfileViewState extends State<ProfileView> {
             ),
           ),
         ),
+        GestureDetector(
+          onTap: () {
+            if (hasPeerBlockedMe) {
+              // Unblock the user
+              unblockUser();
+            } else {
+              // Block the user
+              blockUser();
+            }
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+                // padding: EdgeInsets.only(bottom: 18, top: 8),
+                width: 256,
+                height: 48,
+                decoration: BoxDecoration(
+                  color: hasPeerBlockedMe ? Colors.grey : Colors.red,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(
+                  child: Text(
+                    hasPeerBlockedMe ? 'Unblock' : 'Block',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20, // Set the text size
+                    ),
+                  ),
+                )),
+          ),
+        ),
+        // ElevatedButton(
+        //   onPressed: () {
+        //     if (hasPeerBlockedMe) {
+        //       // Unblock the user
+        //       unblockUser();
+        //     } else {
+        //       // Block the user
+        //       blockUser();
+        //     }
+        //   },
+        //   style: ElevatedButton.styleFrom(
+        //     primary: hasPeerBlockedMe ? Colors.grey : Colors.red,
+        //     minimumSize: Size(256, 40), // Set width and height
+        //   ),
+        //   child: Text(
+        //     hasPeerBlockedMe ? 'Unblock' : 'Block',
+        //     style: TextStyle(
+        //       color: Colors.white,
+        //       fontSize: 20, // Set the text size
+        //     ),
+        //   ),
+        // )
       ],
     );
+  }
+
+  void blockUser() {
+    // Update the local block status
+    hasPeerBlockedMe = true;
+
+    // Update the block status in the database
+    FirebaseFirestore.instance
+        .collection(DbPaths.collectionusers)
+        .doc(widget.user[Dbkeys.phone])
+        .collection(Dbkeys.chatsWith)
+        .doc(Dbkeys.chatsWith)
+        .set({widget.currentUserNo!: 0}, SetOptions(merge: true));
+
+    setState(() {});
+  }
+
+  void unblockUser() {
+    // Update the local block status
+    hasPeerBlockedMe = false;
+
+    // Update the block status in the database
+    FirebaseFirestore.instance
+        .collection(DbPaths.collectionusers)
+        .doc(widget.user[Dbkeys.phone])
+        .collection(Dbkeys.chatsWith)
+        .doc(Dbkeys.chatsWith)
+        .set({widget.currentUserNo!: 3}, SetOptions(merge: true));
+
+    setState(() {});
   }
 
   @override

@@ -291,79 +291,113 @@ class SmartContactProviderWithLocalStoreData with ChangeNotifier {
     });
   }
 
+  // fetchContacts(BuildContext context, DataModel? model, String currentuserphone,
+  //     SharedPreferences prefs, bool isForceFetch,
+  //     {List<dynamic>? currentuserphoneNumberVariants,
+  //     bool? isRequestAgain = false}) async {
+  //   if (prefs.getBool('allowed-contacts') == null || isRequestAgain == true) {
+  //     showDynamicModalBottomSheet(
+  //         isDismissable: false,
+  //         height: 0.4,
+  //         context: context,
+  //         widgetList: [],
+  //         popableWidgetList: (popable) {
+  //           return [
+  //             Padding(
+  //               padding: const EdgeInsets.all(13.0),
+  //               child: Text(
+  //                 getTranslated(popable, 'usecontactsdesc'),
+  //                 textAlign: TextAlign.center,
+  //                 style: TextStyle(height: 1.3, color: fiberchatGrey),
+  //               ),
+  //             ),
+  //             Padding(
+  //               padding: const EdgeInsets.fromLTRB(18, 25, 18, 30),
+  //               child: Row(
+  //                 mainAxisSize: MainAxisSize.max,
+  //                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //                 crossAxisAlignment: CrossAxisAlignment.center,
+  //                 children: [
+  //                   ElevatedButton(
+  //                       style: ElevatedButton.styleFrom(
+  //                           side: BorderSide(
+  //                               color: Thm.isDarktheme(prefs)
+  //                                   ? fiberchatWhite
+  //                                   : fiberchatGrey.withOpacity(0.3),
+  //                               width: 1),
+  //                           elevation: 0.44,
+  //                           backgroundColor: fiberchatWhite),
+  //                       onPressed: () async {
+  //                         Navigator.of(popable).pop();
+  //                         await prefs.setBool('allowed-contacts', false);
+  //                         searchingcontactsindatabase = false;
+  //                         notifyListeners();
+  //                       },
+  //                       child: Text(
+  //                         getTranslated(popable, 'declinebutton'),
+  //                         style: TextStyle(color: fiberchatBlack),
+  //                       )),
+  //                   ElevatedButton(
+  //                       style: ElevatedButton.styleFrom(
+  //                           elevation: 0.4,
+  //                           backgroundColor: fiberchatSECONDARYolor),
+  //                       onPressed: () async {
+  //                         Navigator.of(popable).pop();
+  //                         await prefs.setBool('allowed-contacts', true);
+  //                         await getContactsIfAgreed(context, model,
+  //                             currentuserphone, prefs, isForceFetch,
+  //                             currentuserphoneNumberVariants:
+  //                                 currentuserphoneNumberVariants);
+  //                       },
+  //                       child: Text(getTranslated(popable, 'agreebutton'))),
+  //                 ],
+  //               ),
+  //             )
+  //           ];
+  //         },
+  //         title: getTranslated(context, 'usecontacts'),
+  //         isdark: Thm.isDarktheme(prefs));
+  //   } else if (prefs.getBool('allowed-contacts') == false) {
+  //     setIsLoading(false);
+  //   } else if (prefs.getBool('allowed-contacts') == true) {
+  //     await getContactsIfAgreed(
+  //         context, model, currentuserphone, prefs, isForceFetch,
+  //         currentuserphoneNumberVariants: currentuserphoneNumberVariants);
+  //   } else {}
+  // }
+
   fetchContacts(BuildContext context, DataModel? model, String currentuserphone,
       SharedPreferences prefs, bool isForceFetch,
       {List<dynamic>? currentuserphoneNumberVariants,
       bool? isRequestAgain = false}) async {
+    // Check if the permission is already granted or denied
     if (prefs.getBool('allowed-contacts') == null || isRequestAgain == true) {
-      showDynamicModalBottomSheet(
-          isDismissable: false,
-          height: 0.4,
-          context: context,
-          widgetList: [],
-          popableWidgetList: (popable) {
-            return [
-              Padding(
-                padding: const EdgeInsets.all(13.0),
-                child: Text(
-                  getTranslated(popable, 'usecontactsdesc'),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(height: 1.3, color: fiberchatGrey),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(18, 25, 18, 30),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            side: BorderSide(
-                                color: Thm.isDarktheme(prefs)
-                                    ? fiberchatWhite
-                                    : fiberchatGrey.withOpacity(0.3),
-                                width: 1),
-                            elevation: 0.44,
-                            backgroundColor: fiberchatWhite),
-                        onPressed: () async {
-                          Navigator.of(popable).pop();
-                          await prefs.setBool('allowed-contacts', false);
-                          searchingcontactsindatabase = false;
-                          notifyListeners();
-                        },
-                        child: Text(
-                          getTranslated(popable, 'declinebutton'),
-                          style: TextStyle(color: fiberchatBlack),
-                        )),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            elevation: 0.4,
-                            backgroundColor: fiberchatSECONDARYolor),
-                        onPressed: () async {
-                          Navigator.of(popable).pop();
-                          await prefs.setBool('allowed-contacts', true);
-                          await getContactsIfAgreed(context, model,
-                              currentuserphone, prefs, isForceFetch,
-                              currentuserphoneNumberVariants:
-                                  currentuserphoneNumberVariants);
-                        },
-                        child: Text(getTranslated(popable, 'agreebutton'))),
-                  ],
-                ),
-              )
-            ];
-          },
-          title: getTranslated(context, 'usecontacts'),
-          isdark: Thm.isDarktheme(prefs));
+      // Request permission directly without showing the bottom sheet
+      final status = await Permission.contacts.request();
+
+      if (status.isGranted) {
+        // Permission granted, proceed with fetching contacts
+        await getContactsIfAgreed(
+            context, model, currentuserphone, prefs, isForceFetch,
+            currentuserphoneNumberVariants: currentuserphoneNumberVariants);
+      } else {
+        // Permission denied or restricted, handle accordingly
+        await prefs.setBool('allowed-contacts', false);
+        searchingcontactsindatabase = false;
+        setIsLoading(false);
+        notifyListeners();
+      }
     } else if (prefs.getBool('allowed-contacts') == false) {
+      // Permission denied previously, handle accordingly
       setIsLoading(false);
     } else if (prefs.getBool('allowed-contacts') == true) {
+      // Permission already granted, proceed with fetching contacts
       await getContactsIfAgreed(
           context, model, currentuserphone, prefs, isForceFetch,
           currentuserphoneNumberVariants: currentuserphoneNumberVariants);
-    } else {}
+    } else {
+      // Handle other cases if necessary
+    }
   }
 
   setIsLoading(bool val) {

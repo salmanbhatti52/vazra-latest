@@ -1071,6 +1071,128 @@ class _ChatScreenState extends State<ChatScreen>
   contextMenuNew(contextForDialog, Map<String, dynamic> mssgDoc, bool isTemp,
       {bool saved = false}) {
     List<Widget> tiles = List.from(<Widget>[]);
+    void reportMessage(BuildContext context, Map<String, dynamic> message) {
+      // Implement the logic for reporting a message here
+      // You can show a dialog or take any other actions you want
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Report Message"),
+            content: Text(
+                "You have reported this message for inappropriate content."),
+            actions: <Widget>[
+              TextButton(
+                child: Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    //####################------------------------Report Message--------------------------------------------###########//
+    if (mssgDoc[Dbkeys.from] != currentUserNo) {
+      tiles.add(
+        Builder(
+          builder: (BuildContext popable) => ListTile(
+            dense: true,
+            leading: Icon(Icons.flag),
+            title: Text(
+              getTranslated(popable, 'report_message'),
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: pickTextColorBasedOnBgColorAdvanced(
+                  Thm.isDarktheme(widget.prefs)
+                      ? fiberchatDIALOGColorDarkMode
+                      : fiberchatDIALOGColorLightMode,
+                ),
+              ),
+            ),
+            onTap: () {
+              // Add code to report the message here
+              reportMessage(contextForDialog, mssgDoc);
+              Navigator.of(popable).pop();
+            },
+          ),
+        ),
+      );
+    }
+
+    void reportUser(BuildContext context, String userId) {
+      // Implement the logic for reporting a user here
+      // You can show a dialog or take any other actions you want
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Report User"),
+            content:
+                Text("You have reported this user for inappropriate behavior."),
+            actions: <Widget>[
+              TextButton(
+                child: Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    // "Report User" Option
+    if (mssgDoc[Dbkeys.from] != currentUserNo) {
+      tiles.add(
+        Builder(
+          builder: (BuildContext popable) => ListTile(
+            dense: true,
+            leading: Icon(Icons.report),
+            title: Text(
+              getTranslated(popable, 'report_user'),
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: pickTextColorBasedOnBgColorAdvanced(
+                  Thm.isDarktheme(widget.prefs)
+                      ? fiberchatDIALOGColorDarkMode
+                      : fiberchatDIALOGColorLightMode,
+                ),
+              ),
+            ),
+            onTap: () {
+              // Add code to report the user here
+              reportUser(contextForDialog, mssgDoc[Dbkeys.from]);
+              Navigator.of(popable).pop();
+            },
+          ),
+        ),
+      );
+    }
+    tiles.add(Builder(
+      builder: (BuildContext popable) => ListTile(
+        dense: true,
+        leading: Icon(Icons.flag),
+        title: Text(
+          getTranslated(popable, 'report_message'),
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: Colors.white, // Customize the color as needed
+          ),
+        ),
+        onTap: () {
+          Navigator.of(popable).pop();
+          // Call the reportMessage method here
+          reportMessage(popable, mssgDoc);
+        },
+      ),
+    ));
     //####################----------------------- Delete Msgs for SENDER ---------------------------------------------------
     if ((mssgDoc[Dbkeys.from] == currentUserNo &&
             mssgDoc[Dbkeys.hasSenderDeleted] == false) &&
@@ -4438,8 +4560,7 @@ class _ChatScreenState extends State<ChatScreen>
                                     ? SizedBox(
                                         width: 0,
                                       )
-                                    :
-                                Container(
+                                    : Container(
                                         margin: EdgeInsets.only(bottom: 5),
                                         height: 35,
                                         alignment: Alignment.topLeft,
@@ -4528,14 +4649,18 @@ class _ChatScreenState extends State<ChatScreen>
                                                                           "msg coming ${linksGifs[index]}");
                                                                       onSendMessage(
                                                                           context,
-                                                                          linksGifs[index]!,
-                                                                          MessageType.image,
-                                                                          DateTime.now().millisecondsSinceEpoch);
+                                                                          linksGifs[
+                                                                              index]!,
+                                                                          MessageType
+                                                                              .image,
+                                                                          DateTime.now()
+                                                                              .millisecondsSinceEpoch);
                                                                       hidekeyboard(
                                                                           context);
                                                                       setStateIfMounted(
-                                                                              () {});
-                                                                      Navigator.of(context)
+                                                                          () {});
+                                                                      Navigator.of(
+                                                                              context)
                                                                           .pop();
                                                                       // if (gifController !=
                                                                       //         null &&

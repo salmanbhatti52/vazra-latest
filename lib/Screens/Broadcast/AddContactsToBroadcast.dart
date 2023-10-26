@@ -504,11 +504,8 @@ class _AddContactsToBroadcastState extends State<AddContactsToBroadcast>
                                                           width: 80,
                                                           padding:
                                                               const EdgeInsets
-                                                                      .fromLTRB(
-                                                                  11,
-                                                                  10,
-                                                                  12,
-                                                                  10),
+                                                                  .fromLTRB(11,
+                                                                  10, 12, 10),
                                                           child: Column(
                                                             children: [
                                                               customCircleAvatar(
