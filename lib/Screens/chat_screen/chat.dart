@@ -1086,6 +1086,7 @@ class _ChatScreenState extends State<ChatScreen>
                 child: Text("OK"),
                 onPressed: () {
                   Navigator.of(context).pop();
+                  
                 },
               ),
             ],
@@ -1186,10 +1187,90 @@ class _ChatScreenState extends State<ChatScreen>
             color: Colors.white, // Customize the color as needed
           ),
         ),
-        onTap: () {
+        onTap: () async {
           Navigator.of(popable).pop();
           // Call the reportMessage method here
           reportMessage(popable, mssgDoc);
+
+          await FirebaseFirestore.instance
+              .collection(DbPaths.collectionmessages)
+              .doc(chatId)
+              .collection(chatId!)
+              .doc('${mssgDoc[Dbkeys.timestamp]}')
+              .get()
+              .then((chatDoc) async {
+            if (!chatDoc.exists) {
+              Fiberchat.toast('Please reload this screen !');
+            } else if (chatDoc.exists) {
+              Map<String, dynamic> realtimeDoc = chatDoc.data()!;
+              if (realtimeDoc[Dbkeys.hasRecipientDeleted] == true) {
+                if ((mssgDoc.containsKey(Dbkeys.isbroadcast) == true
+                        ? mssgDoc[Dbkeys.isbroadcast]
+                        : false) ==
+                    true) {
+                  // -------Delete broadcast message completely as recipient has already deleted
+                  await FirebaseFirestore.instance
+                      .collection(DbPaths.collectionmessages)
+                      .doc(chatId)
+                      .collection(chatId!)
+                      .doc('${realtimeDoc[Dbkeys.timestamp]}')
+                      .delete();
+                  delete(realtimeDoc[Dbkeys.timestamp]);
+                  Save.deleteMessage(peerNo, realtimeDoc);
+                  _savedMessageDocs.removeWhere((msg) =>
+                      msg[Dbkeys.timestamp] == mssgDoc[Dbkeys.timestamp]);
+                  setStateIfMounted(() {
+                    _savedMessageDocs = List.from(_savedMessageDocs);
+                  });
+                } else {
+                  // -------Delete message completely as recipient has already deleted
+                  await deleteMsgMedia(realtimeDoc, chatId!)
+                      .then((isDeleted) async {
+                    if (isDeleted == false || isDeleted == null) {
+                      Fiberchat.toast('Could not delete. Please try again!');
+                    } else {
+                      await FirebaseFirestore.instance
+                          .collection(DbPaths.collectionmessages)
+                          .doc(chatId)
+                          .collection(chatId!)
+                          .doc('${realtimeDoc[Dbkeys.timestamp]}')
+                          .delete();
+                      delete(realtimeDoc[Dbkeys.timestamp]);
+                      Save.deleteMessage(peerNo, realtimeDoc);
+                      _savedMessageDocs.removeWhere((msg) =>
+                          msg[Dbkeys.timestamp] == mssgDoc[Dbkeys.timestamp]);
+                      setStateIfMounted(() {
+                        _savedMessageDocs = List.from(_savedMessageDocs);
+                      });
+                    }
+                  });
+                }
+              } else {
+                //----Don't Delete Media from server, as recipient has not deleted the message from thier message list-----
+                FirebaseFirestore.instance
+                    .collection(DbPaths.collectionmessages)
+                    .doc(chatId)
+                    .collection(chatId!)
+                    .doc('${realtimeDoc[Dbkeys.timestamp]}')
+                    .set({Dbkeys.hasSenderDeleted: true},
+                        SetOptions(merge: true));
+
+                Save.deleteMessage(peerNo, mssgDoc);
+                _savedMessageDocs.removeWhere((msg) =>
+                    msg[Dbkeys.timestamp] == mssgDoc[Dbkeys.timestamp]);
+                setStateIfMounted(() {
+                  _savedMessageDocs = List.from(_savedMessageDocs);
+                });
+
+                Map<String, dynamic> tempDoc = realtimeDoc;
+                setStateIfMounted(() {
+                  tempDoc[Dbkeys.hasSenderDeleted] = true;
+                });
+                updateDeleteBySenderField(
+                    realtimeDoc[Dbkeys.timestamp], tempDoc, contextForDialog);
+              }
+            }
+          });
         },
       ),
     ));
