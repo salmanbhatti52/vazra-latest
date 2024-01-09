@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "450399040998-8clajvsvusdd0b5d0tllrr8em04fmcpd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fibrechat.app",
+            "certificate_hash": "aa6cea9e6b6f9a885f2aa2631f7eb24d0397822b"
+          }
+        },
+        {
           "client_id": "450399040998-ba2fqaeqkth0vt26jae7gctcjd71lpv4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

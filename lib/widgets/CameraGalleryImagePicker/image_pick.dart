@@ -1,20 +1,22 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:wechat_assets_picker/wechat_assets_picker.dart';
+import 'package:image_picker/image_picker.dart';
 
 Future<File?> pickSingleImage(BuildContext context) async {
-  final List<AssetEntity>? result = await AssetPicker.pickAssets(
-    context,
-    pickerConfig: AssetPickerConfig(
-        maxAssets: 1,
-        pathThumbnailSize: ThumbnailSize.square(84),
-        gridCount: 3,
-        pageSize: 900,
-        requestType: RequestType.image,
-        textDelegate: EnglishAssetPickerTextDelegate()),
+  final ImagePicker _picker = ImagePicker();
+
+  // Request permission if not granted
+  final XFile? pickedFile = await _picker.pickImage(
+    source:
+        ImageSource.gallery, // You can use ImageSource.camera for the camera
   );
-  if (result != null) {
-    return result.first.file;
+
+  if (pickedFile != null) {
+    return File(pickedFile.path);
+  } else {
+    // Handle the case where the user canceled image picking
+    print("Image picking canceled by the user.");
   }
+
   return null;
 }

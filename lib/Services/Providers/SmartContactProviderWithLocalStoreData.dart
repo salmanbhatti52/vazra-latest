@@ -1,24 +1,21 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
-
 import 'package:async/async.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:contacts_service/contacts_service.dart';
+import 'package:flutter/material.dart';
+import 'package:fiberchat/Utils/utils.dart';
 import 'package:fiberchat/Configs/Dbkeys.dart';
 import 'package:fiberchat/Configs/Dbpaths.dart';
-import 'package:fiberchat/Configs/app_constants.dart';
-import 'package:fiberchat/Configs/optional_constants.dart';
-import 'package:fiberchat/Models/DataModel.dart';
-import 'package:fiberchat/Services/localization/language_constants.dart';
-import 'package:fiberchat/Utils/open_settings.dart';
-import 'package:fiberchat/Utils/theme_management.dart';
-import 'package:fiberchat/Utils/utils.dart';
-import 'package:fiberchat/widgets/DynamicBottomSheet/dynamic_modal_bottomsheet.dart';
-import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
+import 'package:fiberchat/Models/DataModel.dart';
+import 'package:fiberchat/Utils/open_settings.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:contacts_service/contacts_service.dart';
+import 'package:fiberchat/Configs/optional_constants.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fiberchat/Services/localization/language_constants.dart';
+
 
 class LocalUserData {
   final lastUpdated, userType;

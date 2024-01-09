@@ -1,44 +1,42 @@
-//*************   © Copyrighted by Thinkcreative_Technologies. An Exclusive item of Envato market. Make sure you have purchased a Regular License OR Extended license for the Source Code from Envato to use this product. See the License Defination attached with source code. *********************
-
-import 'dart:async';
 import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:device_info_plus/device_info_plus.dart';
-import 'package:devicelocale/devicelocale.dart';
-import 'package:fiberchat/Configs/Dbkeys.dart';
-import 'package:fiberchat/Configs/Dbpaths.dart';
-import 'package:fiberchat/Configs/Enum.dart';
-import 'package:fiberchat/Configs/app_constants.dart';
-import 'package:fiberchat/Configs/optional_constants.dart';
-import 'package:fiberchat/Models/E2EE/e2ee.dart' as e2ee;
-import 'package:fiberchat/Screens/homepage/homepage.dart';
-import 'package:fiberchat/Screens/privacypolicy&TnC/PdfViewFromCachedUrl.dart';
-import 'package:fiberchat/Services/Providers/Observer.dart';
-import 'package:fiberchat/Services/Providers/TimerProvider.dart';
-import 'package:fiberchat/Services/localization/language.dart';
-import 'package:fiberchat/Services/localization/language_constants.dart';
-import 'package:fiberchat/Utils/color_detector.dart';
-import 'package:fiberchat/Utils/custom_url_launcher.dart';
-import 'package:fiberchat/Utils/phonenumberVariantsGenerator.dart';
-import 'package:fiberchat/Utils/setStatusBarColor.dart';
-import 'package:fiberchat/Utils/theme_management.dart';
-import 'package:fiberchat/Utils/unawaited.dart';
-import 'package:fiberchat/Utils/utils.dart';
+import 'dart:async';
 import 'package:fiberchat/main.dart';
-import 'package:fiberchat/widgets/DynamicBottomSheet/dynamic_modal_bottomsheet.dart';
-import 'package:fiberchat/widgets/PhoneField/countries.dart';
-import 'package:fiberchat/widgets/PhoneField/intl_phone_field.dart';
-import 'package:fiberchat/widgets/PhoneField/phone_number.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fiberchat/Utils/utils.dart';
+import 'package:fiberchat/Configs/Enum.dart';
+import 'package:fiberchat/Configs/Dbkeys.dart';
+import 'package:devicelocale/devicelocale.dart';
+import 'package:fiberchat/Configs/Dbpaths.dart';
+import 'package:fiberchat/Utils/unawaited.dart';
 import 'package:sms_autofill/sms_autofill.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fiberchat/Utils/color_detector.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fiberchat/Configs/app_constants.dart';
+import 'package:fiberchat/Utils/theme_management.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:fiberchat/Utils/setStatusBarColor.dart';
+import 'package:fiberchat/Models/E2EE/e2ee.dart' as e2ee;
+import 'package:fiberchat/Screens/homepage/homepage.dart';
+import 'package:fiberchat/Utils/custom_url_launcher.dart';
+import 'package:fiberchat/Configs/optional_constants.dart';
+import 'package:fiberchat/Services/Providers/Observer.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fiberchat/widgets/PhoneField/countries.dart';
+import 'package:fiberchat/Services/localization/language.dart';
+import 'package:fiberchat/widgets/PhoneField/phone_number.dart';
+import 'package:fiberchat/Services/Providers/TimerProvider.dart';
+import 'package:fiberchat/Utils/phonenumberVariantsGenerator.dart';
+import 'package:fiberchat/widgets/PhoneField/intl_phone_field.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fiberchat/Services/localization/language_constants.dart';
+import 'package:fiberchat/Screens/privacypolicy&TnC/PdfViewFromCachedUrl.dart';
+import 'package:fiberchat/widgets/DynamicBottomSheet/dynamic_modal_bottomsheet.dart';
+//*************   © Copyrighted by Thinkcreative_Technologies. An Exclusive item of Envato market. Make sure you have purchased a Regular License OR Extended license for the Source Code from Envato to use this product. See the License Defination attached with source code. *********************
 
 class LoginScreen extends StatefulWidget {
   LoginScreen(
@@ -265,6 +263,8 @@ class LoginScreenState extends State<LoginScreen>
     };
     debugPrint('Verify phone triggered');
     // try {
+    firebaseAuth.setSettings(appVerificationDisabledForTesting: true);
+
     await firebaseAuth.verifyPhoneNumber(
         phoneNumber: (phoneCode! + _phoneNo.text).trim(),
         timeout: Duration(seconds: timeOutSeconds),
@@ -272,6 +272,7 @@ class LoginScreenState extends State<LoginScreen>
         verificationFailed: verificationFailed,
         codeSent: codeSent,
         codeAutoRetrievalTimeout: codeAutoRetrievalTimeout);
+
     // } catch (e) {
     //   Fiberchat.toast('NEW CATCH' + e.toString());
     // }
@@ -356,7 +357,7 @@ class LoginScreenState extends State<LoginScreen>
 
         if (documents.length == 0) {
           String? fcmTokenn = await FirebaseMessaging.instance.getToken();
-          print("tokennnnn: ${fcmTokenn}");
+          print("tokennnnn: $fcmTokenn");
           if (fcmTokenn != null) {
             await storage.write(
                 key: Dbkeys.privateKey, value: pair.secretKey.toBase64());

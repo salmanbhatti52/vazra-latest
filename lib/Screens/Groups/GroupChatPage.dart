@@ -1,86 +1,84 @@
-//*************   © Copyrighted by Thinkcreative_Technologies. An Exclusive item of Envato market. Make sure you have purchased a Regular License OR Extended license for the Source Code from Envato to use this product. See the License Defination attached with source code. *********************
-
+import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
-
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart' as emojipic;
-import 'package:encrypt/encrypt.dart' as encrypt;
-import 'package:fiberchat/Configs/Dbkeys.dart';
-import 'package:fiberchat/Configs/Dbpaths.dart';
-import 'package:fiberchat/Configs/Enum.dart';
-import 'package:fiberchat/Configs/app_constants.dart';
-import 'package:fiberchat/Configs/optional_constants.dart';
-import 'package:fiberchat/Models/DataModel.dart';
-import 'package:fiberchat/Models/E2EE/e2ee.dart' as e2ee;
-import 'package:fiberchat/Screens/Groups/GroupDetails.dart';
-import 'package:fiberchat/Screens/Groups/widget/groupChatBubble.dart';
-import 'package:fiberchat/Screens/auth_screens/login.dart';
-import 'package:fiberchat/Screens/call_history/callhistory.dart';
-import 'package:fiberchat/Screens/calling_screen/pickup_layout.dart';
-import 'package:fiberchat/Screens/chat_screen/chat.dart';
-import 'package:fiberchat/Screens/chat_screen/utils/aes_encryption.dart';
-import 'package:fiberchat/Screens/chat_screen/utils/photo_view.dart';
-import 'package:fiberchat/Screens/chat_screen/utils/uploadMediaWithProgress.dart';
-import 'package:fiberchat/Screens/contact_screens/ContactsSelect.dart';
-import 'package:fiberchat/Screens/contact_screens/SelectContactsToForward.dart';
-import 'package:fiberchat/Screens/homepage/Setupdata.dart';
-import 'package:fiberchat/Screens/privacypolicy&TnC/PdfViewFromCachedUrl.dart';
-import 'package:fiberchat/Services/Admob/admob.dart';
-import 'package:fiberchat/Services/Providers/GroupChatProvider.dart';
-import 'package:fiberchat/Services/Providers/Observer.dart';
-import 'package:fiberchat/Services/Providers/SmartContactProviderWithLocalStoreData.dart';
-import 'package:fiberchat/Services/Providers/currentchat_peer.dart';
-import 'package:fiberchat/Services/localization/language.dart';
-import 'package:fiberchat/Services/localization/language_constants.dart';
-import 'package:fiberchat/Utils/chat_controller.dart';
-import 'package:fiberchat/Utils/color_detector.dart';
-import 'package:fiberchat/Utils/custom_url_launcher.dart';
-import 'package:fiberchat/Utils/emoji_detect.dart';
-import 'package:fiberchat/Utils/mime_type.dart';
-import 'package:fiberchat/Utils/save.dart';
-import 'package:fiberchat/Utils/setStatusBarColor.dart';
-import 'package:fiberchat/Utils/theme_management.dart';
-import 'package:fiberchat/Utils/unawaited.dart';
-import 'package:fiberchat/Utils/utils.dart';
+import 'package:gif/gif.dart';
+import 'package:path/path.dart';
 import 'package:fiberchat/main.dart';
-import 'package:fiberchat/widgets/AllinOneCameraGalleryImageVideoPicker/AllinOneCameraGalleryImageVideoPicker.dart';
-import 'package:fiberchat/widgets/AudioRecorder/Audiorecord.dart';
-import 'package:fiberchat/widgets/CameraGalleryImagePicker/camera_image_gallery_picker.dart';
-import 'package:fiberchat/widgets/CameraGalleryImagePicker/multiMediaPicker.dart';
-import 'package:fiberchat/widgets/DownloadManager/download_all_file_type.dart';
-import 'package:fiberchat/widgets/DynamicBottomSheet/dynamic_modal_bottomsheet.dart';
-import 'package:fiberchat/widgets/InfiniteList/InfiniteCOLLECTIONListViewWidget.dart';
-import 'package:fiberchat/widgets/MultiDocumentPicker/multiDocumentPicker.dart';
-import 'package:fiberchat/widgets/MyElevatedButton/MyElevatedButton.dart';
-import 'package:fiberchat/widgets/SoundPlayer/SoundPlayerPro.dart';
-import 'package:fiberchat/widgets/VideoEditor/video_editor.dart';
-import 'package:fiberchat/widgets/VideoPicker/VideoPreview.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart' as p;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:gif/gif.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:link_preview_generator/link_preview_generator.dart';
-import 'package:media_info/media_info.dart';
-import 'package:path/path.dart';
-import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-import 'package:receive_sharing_intent/receive_sharing_intent.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:video_compress/video_compress.dart' as compress;
+import 'package:fiberchat/Utils/save.dart';
+import 'package:fiberchat/Utils/utils.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:media_info/media_info.dart';
+import 'package:fiberchat/Configs/Enum.dart';
+import 'package:fiberchat/Configs/Dbkeys.dart';
+import 'package:fiberchat/Configs/Dbpaths.dart';
+import 'package:fiberchat/Utils/mime_type.dart';
+import 'package:fiberchat/Utils/unawaited.dart';
+import 'package:encrypt/encrypt.dart' as encrypt;
+import 'package:fiberchat/Models/DataModel.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:fiberchat/Utils/emoji_detect.dart';
+import 'package:fiberchat/Services/Admob/admob.dart';
+import 'package:fiberchat/Utils/color_detector.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fiberchat/Configs/app_constants.dart';
+import 'package:fiberchat/Utils/chat_controller.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
+import 'package:fiberchat/Utils/theme_management.dart';
+import 'package:fiberchat/Utils/setStatusBarColor.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:fiberchat/Models/E2EE/e2ee.dart' as e2ee;
+import 'package:fiberchat/Screens/chat_screen/chat.dart';
+import 'package:fiberchat/Utils/custom_url_launcher.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:fiberchat/Configs/optional_constants.dart';
+import 'package:fiberchat/Screens/auth_screens/login.dart';
+import 'package:fiberchat/Screens/homepage/Setupdata.dart';
+import 'package:fiberchat/Screens/Groups/GroupDetails.dart';
+import 'package:fiberchat/Services/Providers/Observer.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fiberchat/Services/localization/language.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:video_compress/video_compress.dart' as compress;
+import 'package:fiberchat/Screens/call_history/callhistory.dart';
+import 'package:fiberchat/widgets/VideoEditor/video_editor.dart';
+import 'package:fiberchat/widgets/VideoPicker/VideoPreview.dart';
+import 'package:fiberchat/widgets/AudioRecorder/Audiorecord.dart';
+import 'package:fiberchat/widgets/SoundPlayer/SoundPlayerPro.dart';
+import 'package:fiberchat/Services/Providers/currentchat_peer.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:link_preview_generator/link_preview_generator.dart';
+import 'package:receive_sharing_intent/receive_sharing_intent.dart';
+import 'package:fiberchat/Screens/calling_screen/pickup_layout.dart';
+import 'package:fiberchat/Screens/chat_screen/utils/photo_view.dart';
+import 'package:fiberchat/Services/Providers/GroupChatProvider.dart';
+import 'package:fiberchat/Screens/Groups/widget/groupChatBubble.dart';
+import 'package:fiberchat/Screens/contact_screens/ContactsSelect.dart';
+import 'package:fiberchat/Screens/chat_screen/utils/aes_encryption.dart';
+import 'package:fiberchat/Services/localization/language_constants.dart';
+import 'package:fiberchat/widgets/MyElevatedButton/MyElevatedButton.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart' as emojipic;
+import 'package:fiberchat/Screens/privacypolicy&TnC/PdfViewFromCachedUrl.dart';
+import 'package:fiberchat/widgets/DownloadManager/download_all_file_type.dart';
+import 'package:fiberchat/Screens/contact_screens/SelectContactsToForward.dart';
+import 'package:fiberchat/widgets/MultiDocumentPicker/multiDocumentPicker.dart';
+import 'package:fiberchat/Screens/chat_screen/utils/uploadMediaWithProgress.dart';
+import 'package:fiberchat/widgets/CameraGalleryImagePicker/multiMediaPicker.dart';
+import 'package:fiberchat/widgets/DynamicBottomSheet/dynamic_modal_bottomsheet.dart';
+import 'package:fiberchat/widgets/InfiniteList/InfiniteCOLLECTIONListViewWidget.dart';
+import 'package:fiberchat/Services/Providers/SmartContactProviderWithLocalStoreData.dart';
+import 'package:fiberchat/widgets/CameraGalleryImagePicker/camera_image_gallery_picker.dart';
+import 'package:fiberchat/widgets/AllinOneCameraGalleryImageVideoPicker/AllinOneCameraGalleryImageVideoPicker.dart';
+//*************   © Copyrighted by Thinkcreative_Technologies. An Exclusive item of Envato market. Make sure you have purchased a Regular License OR Extended license for the Source Code from Envato to use this product. See the License Defination attached with source code. *********************
 
 class GroupChatPage extends StatefulWidget {
   final String currentUserno;
@@ -1231,102 +1229,106 @@ class _GroupChatPageState extends State<GroupChatPage>
                                               size: 40,
                                               color: fiberchatGrey,
                                             ),
-                                            onPressed: observer
-                                                        .ismediamessagingallowed ==
-                                                    false
-                                                ? () {
-                                                    Fiberchat.showRationale(
-                                                        getTranslated(
-                                                            this.context,
-                                                            'mediamssgnotallowed'));
-                                                  }
-                                                : () async {
-                                              showModalBottomSheet(
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return Container(
-                                                        child: GridView
-                                                            .builder(
-                                                          itemCount:
-                                                          linksGifs
-                                                              .length,
-                                                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                                              crossAxisCount:
-                                                              2,
-                                                              crossAxisSpacing:
-                                                              10.0,
-                                                              mainAxisSpacing:
-                                                              10.0),
-                                                          itemBuilder:
-                                                              (BuildContext
-                                                          context,
-                                                              int index) {
-                                                            return GestureDetector(
-                                                              child:
-                                                              Container(
-                                                                padding:
-                                                                EdgeInsets
-                                                                    .symmetric(
-                                                                  horizontal:
-                                                                  20,
-                                                                  vertical:
-                                                                  20,
-                                                                ),
-                                                                child:
-                                                                Gif(
-                                                                  height:
-                                                                  5,
-                                                                  width:
-                                                                  5,
+                                            onPressed:
+                                                observer.ismediamessagingallowed ==
+                                                        false
+                                                    ? () {
+                                                        Fiberchat.showRationale(
+                                                            getTranslated(
+                                                                this.context,
+                                                                'mediamssgnotallowed'));
+                                                      }
+                                                    : () async {
+                                                        showModalBottomSheet(
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return Container(
+                                                                  child: GridView
+                                                                      .builder(
+                                                                itemCount:
+                                                                    linksGifs
+                                                                        .length,
+                                                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                                                    crossAxisCount:
+                                                                        2,
+                                                                    crossAxisSpacing:
+                                                                        10.0,
+                                                                    mainAxisSpacing:
+                                                                        10.0),
+                                                                itemBuilder:
+                                                                    (BuildContext
+                                                                            context,
+                                                                        int index) {
+                                                                  return GestureDetector(
+                                                                    child:
+                                                                        Container(
+                                                                      padding:
+                                                                          EdgeInsets
+                                                                              .symmetric(
+                                                                        horizontal:
+                                                                            20,
+                                                                        vertical:
+                                                                            20,
+                                                                      ),
+                                                                      child:
+                                                                          Gif(
+                                                                        height:
+                                                                            5,
+                                                                        width:
+                                                                            5,
 
-                                                                  fit: BoxFit
-                                                                      .scaleDown,
-                                                                  image:
-                                                                  NetworkImage(
-                                                                    '${linksGifs[index]}',
-                                                                  ),
-                                                                  controller:
-                                                                  gifController, // if duration and fps is null, original gif fps will be used.
-                                                                  //fps: 30,
-                                                                  //duration: const Duration(seconds: 3),
-                                                                  autostart:
-                                                                  Autostart.no,
-                                                                  // placeholder: (context) => const Text('Loading...'),
-                                                                  onFetchCompleted:
-                                                                      () {
-                                                                    gifController
-                                                                        ?.reset();
-                                                                    gifController
-                                                                        ?.forward();
-                                                                  },
-                                                                ),
-                                                              ),
-                                                              onTap: () {
-                                                                print(
-                                                                    "msg coming ${linksGifs[index]}");
-                                                                onSendMessage(
-                                                                  context: context,
-                                                                  content: linksGifs[index]!,
-                                                                  type: MessageType.image,
-                                                                );
-                                                                hidekeyboard(
-                                                                    context);
-                                                                setStateIfMounted(
-                                                                        () {});
-                                                                Navigator.of(context)
-                                                                    .pop();
-                                                                // if (gifController !=
-                                                                //         null &&
-                                                                //     mounted) {
-                                                                //
-                                                                //
-                                                                // }
-                                                              },
-                                                            );
-                                                          },
-                                                        ));
-                                                  });
-                                            }),
+                                                                        fit: BoxFit
+                                                                            .scaleDown,
+                                                                        image:
+                                                                            NetworkImage(
+                                                                          '${linksGifs[index]}',
+                                                                        ),
+                                                                        controller:
+                                                                            gifController, // if duration and fps is null, original gif fps will be used.
+                                                                        //fps: 30,
+                                                                        //duration: const Duration(seconds: 3),
+                                                                        autostart:
+                                                                            Autostart.no,
+                                                                        // placeholder: (context) => const Text('Loading...'),
+                                                                        onFetchCompleted:
+                                                                            () {
+                                                                          gifController
+                                                                              ?.reset();
+                                                                          gifController
+                                                                              ?.forward();
+                                                                        },
+                                                                      ),
+                                                                    ),
+                                                                    onTap: () {
+                                                                      print(
+                                                                          "msg coming ${linksGifs[index]}");
+                                                                      onSendMessage(
+                                                                        context:
+                                                                            context,
+                                                                        content:
+                                                                            linksGifs[index]!,
+                                                                        type: MessageType
+                                                                            .image,
+                                                                      );
+                                                                      hidekeyboard(
+                                                                          context);
+                                                                      setStateIfMounted(
+                                                                          () {});
+                                                                      Navigator.of(
+                                                                              context)
+                                                                          .pop();
+                                                                      // if (gifController !=
+                                                                      //         null &&
+                                                                      //     mounted) {
+                                                                      //
+                                                                      //
+                                                                      // }
+                                                                    },
+                                                                  );
+                                                                },
+                                                              ));
+                                                            });
+                                                      }),
                                       ),
                               ],
                             ))
@@ -3602,15 +3604,12 @@ class _GroupChatPageState extends State<GroupChatPage>
                       this.context,
                       MaterialPageRoute(
                         builder: (context) => PhotoViewWrapper(
-
-                          prefs: widget.prefs,
-                          keyloader: _keyLoader,
-                          imageUrl: doc[Dbkeys.content],
-                          message: doc[Dbkeys.content],
-                          tag: doc[Dbkeys.groupmsgTIME].toString(),
-                          urls: [doc[Dbkeys.content]]
-  
-                        ),
+                            prefs: widget.prefs,
+                            keyloader: _keyLoader,
+                            imageUrl: doc[Dbkeys.content],
+                            message: doc[Dbkeys.content],
+                            tag: doc[Dbkeys.groupmsgTIME].toString(),
+                            urls: [doc[Dbkeys.content]]),
                       )),
                   child: CachedNetworkImage(
                     placeholder: (context, url) => Container(

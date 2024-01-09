@@ -1,97 +1,95 @@
-//*************   © Copyrighted by Thinkcreative_Technologies. An Exclusive item of Envato market. Make sure you have purchased a Regular License OR Extended license for the Source Code from Envato to use this product. See the License Defination attached with source code. *********************
-
+import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
-
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collection/collection.dart';
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart' as emojipic;
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
-import 'package:encrypt/encrypt.dart' as encrypt;
-import 'package:fiberchat/Configs/Dbkeys.dart';
-import 'package:fiberchat/Configs/Dbpaths.dart';
-import 'package:fiberchat/Configs/Enum.dart';
-import 'package:fiberchat/Configs/app_constants.dart';
-import 'package:fiberchat/Configs/optional_constants.dart';
-import 'package:fiberchat/Models/DataModel.dart';
-import 'package:fiberchat/Models/E2EE/e2ee.dart' as e2ee;
-import 'package:fiberchat/Screens/auth_screens/login.dart';
-import 'package:fiberchat/Screens/call_history/callhistory.dart';
-import 'package:fiberchat/Screens/calling_screen/pickup_layout.dart';
-import 'package:fiberchat/Screens/chat_screen/Widget/bubble.dart';
-import 'package:fiberchat/Screens/chat_screen/utils/aes_encryption.dart';
-import 'package:fiberchat/Screens/chat_screen/utils/audioPlayback.dart';
-import 'package:fiberchat/Screens/chat_screen/utils/deleteChatMedia.dart';
-import 'package:fiberchat/Screens/chat_screen/utils/message.dart';
-import 'package:fiberchat/Screens/chat_screen/utils/photo_view.dart';
-import 'package:fiberchat/Screens/chat_screen/utils/uploadMediaWithProgress.dart';
-import 'package:fiberchat/Screens/contact_screens/ContactsSelect.dart';
-import 'package:fiberchat/Screens/contact_screens/SelectContactsToForward.dart';
-import 'package:fiberchat/Screens/homepage/Setupdata.dart';
-import 'package:fiberchat/Screens/privacypolicy&TnC/PdfViewFromCachedUrl.dart';
-import 'package:fiberchat/Screens/profile_settings/profile_view.dart';
-import 'package:fiberchat/Screens/security_screens/security.dart';
-import 'package:fiberchat/Services/Admob/admob.dart';
-import 'package:fiberchat/Services/Providers/Observer.dart';
-import 'package:fiberchat/Services/Providers/SmartContactProviderWithLocalStoreData.dart';
-import 'package:fiberchat/Services/Providers/currentchat_peer.dart';
-import 'package:fiberchat/Services/Providers/seen_provider.dart';
-import 'package:fiberchat/Services/Providers/seen_state.dart';
-import 'package:fiberchat/Services/localization/language.dart';
-import 'package:fiberchat/Services/localization/language_constants.dart';
-import 'package:fiberchat/Utils/call_utilities.dart';
-import 'package:fiberchat/Utils/chat_controller.dart';
-import 'package:fiberchat/Utils/color_detector.dart';
-import 'package:fiberchat/Utils/crc.dart';
-import 'package:fiberchat/Utils/custom_url_launcher.dart';
-import 'package:fiberchat/Utils/emoji_detect.dart';
-import 'package:fiberchat/Utils/mime_type.dart';
-import 'package:fiberchat/Utils/open_settings.dart';
-import 'package:fiberchat/Utils/permissions.dart';
-import 'package:fiberchat/Utils/save.dart';
-import 'package:fiberchat/Utils/setStatusBarColor.dart';
-import 'package:fiberchat/Utils/theme_management.dart';
-import 'package:fiberchat/Utils/unawaited.dart';
-import 'package:fiberchat/Utils/utils.dart';
+import 'package:gif/gif.dart';
+import 'package:intl/intl.dart';
+import 'package:path/path.dart';
 import 'package:fiberchat/main.dart';
-import 'package:fiberchat/widgets/AllinOneCameraGalleryImageVideoPicker/AllinOneCameraGalleryImageVideoPicker.dart';
-import 'package:fiberchat/widgets/AudioRecorder/Audiorecord.dart';
-import 'package:fiberchat/widgets/CameraGalleryImagePicker/camera_image_gallery_picker.dart';
-import 'package:fiberchat/widgets/CameraGalleryImagePicker/multiMediaPicker.dart';
-import 'package:fiberchat/widgets/CountryPicker/CountryCode.dart';
-import 'package:fiberchat/widgets/DownloadManager/download_all_file_type.dart';
-import 'package:fiberchat/widgets/DynamicBottomSheet/dynamic_modal_bottomsheet.dart';
-import 'package:fiberchat/widgets/ImagePicker/image_picker.dart';
-import 'package:fiberchat/widgets/MultiDocumentPicker/multiDocumentPicker.dart';
-import 'package:fiberchat/widgets/MyElevatedButton/MyElevatedButton.dart';
-import 'package:fiberchat/widgets/SoundPlayer/SoundPlayerPro.dart';
-import 'package:fiberchat/widgets/VideoEditor/video_editor.dart';
-import 'package:fiberchat/widgets/VideoPicker/VideoPreview.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart' as p;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:gif/gif.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:intl/intl.dart';
-import 'package:link_preview_generator/link_preview_generator.dart';
-import 'package:media_info/media_info.dart';
-import 'package:path/path.dart';
-import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-import 'package:receive_sharing_intent/receive_sharing_intent.dart';
+import 'package:fiberchat/Utils/crc.dart';
+import 'package:fiberchat/Utils/save.dart';
+import 'package:collection/collection.dart';
+import 'package:fiberchat/Utils/utils.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:media_info/media_info.dart';
+import 'package:fiberchat/Configs/Enum.dart';
+import 'package:fiberchat/Configs/Dbkeys.dart';
+import 'package:fiberchat/Configs/Dbpaths.dart';
+import 'package:fiberchat/Utils/mime_type.dart';
+import 'package:fiberchat/Utils/unawaited.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:video_compress/video_compress.dart' as compress;
+import 'package:encrypt/encrypt.dart' as encrypt;
+import 'package:fiberchat/Models/DataModel.dart';
+import 'package:fiberchat/Utils/permissions.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:fiberchat/Utils/emoji_detect.dart';
+import 'package:fiberchat/Utils/open_settings.dart';
+import 'package:fiberchat/Services/Admob/admob.dart';
+import 'package:fiberchat/Utils/call_utilities.dart';
+import 'package:fiberchat/Utils/color_detector.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fiberchat/Configs/app_constants.dart';
+import 'package:fiberchat/Utils/chat_controller.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
+import 'package:fiberchat/Utils/theme_management.dart';
+import 'package:fiberchat/Utils/setStatusBarColor.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:fiberchat/Models/E2EE/e2ee.dart' as e2ee;
+import 'package:fiberchat/Utils/custom_url_launcher.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:fiberchat/Configs/optional_constants.dart';
+import 'package:fiberchat/Screens/auth_screens/login.dart';
+import 'package:fiberchat/Screens/homepage/Setupdata.dart';
+import 'package:fiberchat/Services/Providers/Observer.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fiberchat/Services/Providers/seen_state.dart';
+import 'package:fiberchat/Services/localization/language.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:video_compress/video_compress.dart' as compress;
+import 'package:fiberchat/Screens/call_history/callhistory.dart';
+import 'package:fiberchat/Services/Providers/seen_provider.dart';
+import 'package:fiberchat/widgets/ImagePicker/image_picker.dart';
+import 'package:fiberchat/widgets/VideoEditor/video_editor.dart';
+import 'package:fiberchat/widgets/VideoPicker/VideoPreview.dart';
+import 'package:fiberchat/Screens/chat_screen/Widget/bubble.dart';
+import 'package:fiberchat/Screens/chat_screen/utils/message.dart';
+import 'package:fiberchat/Screens/security_screens/security.dart';
+import 'package:fiberchat/widgets/AudioRecorder/Audiorecord.dart';
+import 'package:fiberchat/widgets/CountryPicker/CountryCode.dart';
+import 'package:fiberchat/widgets/SoundPlayer/SoundPlayerPro.dart';
+import 'package:fiberchat/Services/Providers/currentchat_peer.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:link_preview_generator/link_preview_generator.dart';
+import 'package:receive_sharing_intent/receive_sharing_intent.dart';
+import 'package:fiberchat/Screens/calling_screen/pickup_layout.dart';
+import 'package:fiberchat/Screens/chat_screen/utils/photo_view.dart';
+import 'package:fiberchat/Screens/profile_settings/profile_view.dart';
+import 'package:fiberchat/Screens/contact_screens/ContactsSelect.dart';
+import 'package:fiberchat/Screens/chat_screen/utils/audioPlayback.dart';
+import 'package:fiberchat/Screens/chat_screen/utils/aes_encryption.dart';
+import 'package:fiberchat/Services/localization/language_constants.dart';
+import 'package:fiberchat/Screens/chat_screen/utils/deleteChatMedia.dart';
+import 'package:fiberchat/widgets/MyElevatedButton/MyElevatedButton.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart' as emojipic;
+import 'package:fiberchat/Screens/privacypolicy&TnC/PdfViewFromCachedUrl.dart';
+import 'package:fiberchat/widgets/DownloadManager/download_all_file_type.dart';
+import 'package:fiberchat/Screens/contact_screens/SelectContactsToForward.dart';
+import 'package:fiberchat/widgets/MultiDocumentPicker/multiDocumentPicker.dart';
+import 'package:fiberchat/Screens/chat_screen/utils/uploadMediaWithProgress.dart';
+import 'package:fiberchat/widgets/CameraGalleryImagePicker/multiMediaPicker.dart';
+import 'package:fiberchat/widgets/DynamicBottomSheet/dynamic_modal_bottomsheet.dart';
+import 'package:fiberchat/Services/Providers/SmartContactProviderWithLocalStoreData.dart';
+import 'package:fiberchat/widgets/CameraGalleryImagePicker/camera_image_gallery_picker.dart';
+import 'package:fiberchat/widgets/AllinOneCameraGalleryImageVideoPicker/AllinOneCameraGalleryImageVideoPicker.dart';
+//*************   © Copyrighted by Thinkcreative_Technologies. An Exclusive item of Envato market. Make sure you have purchased a Regular License OR Extended license for the Source Code from Envato to use this product. See the License Defination attached with source code. *********************
 
 hidekeyboard(BuildContext context) {
   FocusScope.of(context).requestFocus(FocusNode());
@@ -212,7 +210,7 @@ class _ChatScreenState extends State<ChatScreen>
     'https://eigix.net/vazra-gif/Otter_Sticker_Z03.gif',
     'https://eigix.net/vazra-gif/Otter_Sticker_Z04.gif',
     'https://eigix.net/vazra-gif/Otter_Sticker_Z05.gif',
-    '77https://eigix.net/vazra-gif/Otter_Sticker_Z06.gif',
+    'https://eigix.net/vazra-gif/Otter_Sticker_Z06.gif',
   ];
 
   GifController? gifController;
@@ -1086,7 +1084,6 @@ class _ChatScreenState extends State<ChatScreen>
                 child: Text("OK"),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  
                 },
               ),
             ],
@@ -2357,6 +2354,7 @@ class _ChatScreenState extends State<ChatScreen>
   Widget getLocationMessage(Map<String, dynamic> doc, String? message,
       {bool saved = false}) {
     final bool isMe = doc[Dbkeys.from] == currentUserNo;
+    var text = "Here is my Current Location";
     return InkWell(
       onTap: () {
         custom_url_launcher(message!);
@@ -2397,7 +2395,8 @@ class _ChatScreenState extends State<ChatScreen>
                     ),
                     Image.asset(
                       'assets/images/mapview.jpg',
-                    )
+                    ),
+                    
                   ],
                 )
               : Image.asset(
@@ -3904,31 +3903,39 @@ class _ChatScreenState extends State<ChatScreen>
                         RawMaterialButton(
                           disabledElevation: 0,
                           onPressed: () async {
+                            print("Button pressed");
                             hidekeyboard(context);
                             Navigator.of(context).pop();
                             File? selectedMedia =
                                 await pickVideoFromgallery(context)
                                     .catchError((err) {
+                              print("Error picking video: $err");
                               Fiberchat.toast(
                                   getTranslated(context, "invalidfile"));
                               return null;
                             });
 
                             if (selectedMedia == null) {
+                              print("No media selected");
                               setStatusBarColor(widget.prefs);
                             } else {
+                              print("Selected media: ${selectedMedia.path}");
                               setStatusBarColor(widget.prefs);
                               String fileExtension =
                                   p.extension(selectedMedia.path).toLowerCase();
 
                               if (fileExtension == ".mp4" ||
                                   fileExtension == ".mov") {
+                                print("Valid file type");
+
                                 final tempDir = await getTemporaryDirectory();
                                 File file = await File(
                                         '${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.mp4')
                                     .create();
                                 file.writeAsBytesSync(
                                     selectedMedia.readAsBytesSync());
+
+                                print("Temporary file path: ${file.path}");
 
                                 await Navigator.push(
                                     this.context,
@@ -3943,13 +3950,14 @@ class _ChatScreenState extends State<ChatScreen>
                                             maxDuration: 1900,
                                             onEditExported: (videoFile,
                                                 thumnailFile) async {
+                                              print("Video editing completed");
+
                                               int timeStamp = DateTime.now()
                                                   .millisecondsSinceEpoch;
                                               String videoFileext =
                                                   p.extension(file.path);
                                               String videofileName =
                                                   'Video-$timeStamp$videoFileext';
-
                                               String? videoUrl =
                                                   await uploadSelectedLocalFileWithProgressIndicator(
                                                       file,
@@ -3959,6 +3967,8 @@ class _ChatScreenState extends State<ChatScreen>
                                                       filenameoptional:
                                                           videofileName);
                                               if (videoUrl != null) {
+                                                print("Video URL: $videoUrl");
+
                                                 String? thumnailUrl =
                                                     await uploadSelectedLocalFileWithProgressIndicator(
                                                         thumnailFile,
@@ -3966,6 +3976,9 @@ class _ChatScreenState extends State<ChatScreen>
                                                         true,
                                                         timeStamp);
                                                 if (thumnailUrl != null) {
+                                                  print(
+                                                      "Thumbnail URL: $thumnailUrl");
+
                                                   onSendMessage(
                                                       this.context,
                                                       videoUrl +
@@ -3985,8 +3998,9 @@ class _ChatScreenState extends State<ChatScreen>
                                             },
                                             file: File(file.path))));
                               } else {
+                                print("Invalid file type: $fileExtension");
                                 Fiberchat.toast(
-                                    "File type not supported. Please choose a valid .mp4, .mov. \n\nSelected file was $fileExtension ");
+                                    "File type not supported. Please choose a valid .mp4, .mov file. \n\nSelected file was $fileExtension ");
                               }
                             }
                           },
@@ -4154,27 +4168,46 @@ class _ChatScreenState extends State<ChatScreen>
                                     this.context, 'detectingloc'));
                                 await _determinePosition().then(
                                   (location) async {
-                                    var locationstring =
-                                        'https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}';
-                                    onSendMessage(
-                                        this.context,
-                                        locationstring,
-                                        MessageType.location,
-                                        DateTime.now().millisecondsSinceEpoch);
-                                    setStateIfMounted(() {});
-                                    Fiberchat.toast(
-                                      getTranslated(this.context, 'sent'),
-                                    );
+                                    try {
+                                      if (location != null) {
+                                        var text =
+                                            "This is my Current Location";
+                                        var locationString =
+                                            'https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}';
+                                        onSendMessage(
+                                            this.context,
+                                            locationString,
+                                            MessageType.location,
+                                            DateTime.now()
+                                                .millisecondsSinceEpoch);
+                                        setStateIfMounted(() {});
+                                        Fiberchat.toast(
+                                          getTranslated(this.context, 'sent'),
+                                        );
+                                      } else {
+                                        Fiberchat.toast(
+                                          getTranslated(this.context,
+                                              'location_unavailable'),
+                                        );
+                                      }
+                                    } catch (e) {
+                                      print("Error determining position: $e");
+                                      Fiberchat.toast(
+                                        getTranslated(
+                                            this.context, 'location_error'),
+                                      );
+                                    }
                                   },
                                 );
                               } else {
-                                Fiberchat.toast(getTranslated(
-                                    this.context, 'locationdenied'));
+                                Fiberchat.toast(
+                                  getTranslated(this.context, 'locationdenied'),
+                                );
                                 openAppSettings();
                               }
                             });
                           },
-                          elevation: .5,
+                          elevation: 0.5,
                           fillColor: Colors.cyan[700],
                           child: Icon(
                             Icons.location_on,
@@ -5376,8 +5409,8 @@ class _ChatScreenState extends State<ChatScreen>
       when = IsShowNativeTimDate == true
           ? getTranslated(this.context, DateFormat.MMMM().format(date)) +
               ' ' +
-              DateFormat.d().format(date)
-          : when = DateFormat.MMMd().format(date);
+              DateFormat.d().format(date) + ' ' + DateFormat.y().format(date)
+          : when = DateFormat.MMMM().format(date);
     return when;
   }
 

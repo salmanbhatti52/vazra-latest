@@ -1,43 +1,45 @@
-//*************   © Copyrighted by Thinkcreative_Technologies. An Exclusive item of Envato market. Make sure you have purchased a Regular License OR Extended license for the Source Code from Envato to use this product. See the License Defination attached with source code. *********************
-
-import 'dart:core';
 import 'dart:io';
+import 'dart:core';
 import 'package:camera/camera.dart';
-import 'package:fiberchat/Configs/Dbkeys.dart';
-import 'package:fiberchat/Configs/app_constants.dart';
-import 'package:fiberchat/Screens/homepage/homepage.dart';
-import 'package:fiberchat/Screens/homepage/initialize.dart';
-import 'package:fiberchat/Screens/splash_screen/splash_screen.dart';
-import 'package:fiberchat/Services/Providers/BroadcastProvider.dart';
-import 'package:fiberchat/Services/Providers/SmartContactProviderWithLocalStoreData.dart';
-import 'package:fiberchat/Services/Providers/GroupChatProvider.dart';
-import 'package:fiberchat/Services/Providers/LazyLoadingChatProvider.dart';
-import 'package:fiberchat/Services/Providers/Observer.dart';
-import 'package:fiberchat/Services/Providers/StatusProvider.dart';
-import 'package:fiberchat/Services/Providers/TimerProvider.dart';
-import 'package:fiberchat/Services/Providers/currentchat_peer.dart';
-import 'package:fiberchat/Services/Providers/seen_provider.dart';
-import 'package:fiberchat/Services/localization/demo_localization.dart';
-import 'package:fiberchat/Services/localization/language_constants.dart';
-import 'package:fiberchat/Services/Providers/DownloadInfoProvider.dart';
-import 'package:fiberchat/Services/Providers/call_history_provider.dart';
-import 'package:fiberchat/Services/Providers/user_provider.dart';
-import 'package:fiberchat/Utils/theme_management.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:google_translate/google_translate.dart';
-import 'package:oktoast/oktoast.dart';
-import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
+import 'package:fiberchat/Configs/Dbkeys.dart';
+import 'package:fiberchat/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:fiberchat/Configs/app_constants.dart';
+import 'package:overlay_support/overlay_support.dart';
+import 'package:fiberchat/Utils/theme_management.dart';
+import 'package:google_translate/google_translate.dart';
+import 'package:fiberchat/Screens/homepage/homepage.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:fiberchat/Screens/homepage/initialize.dart';
+import 'package:fiberchat/Services/Providers/Observer.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fiberchat/Services/Providers/TimerProvider.dart';
+import 'package:fiberchat/Services/Providers/seen_provider.dart';
+import 'package:fiberchat/Services/Providers/user_provider.dart';
+import 'package:fiberchat/Services/Providers/StatusProvider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:fiberchat/Screens/splash_screen/splash_screen.dart';
+import 'package:fiberchat/Services/Providers/currentchat_peer.dart';
+import 'package:fiberchat/Services/Providers/BroadcastProvider.dart';
+import 'package:fiberchat/Services/Providers/GroupChatProvider.dart';
+import 'package:fiberchat/Services/localization/demo_localization.dart';
+import 'package:fiberchat/Services/Providers/DownloadInfoProvider.dart';
+import 'package:fiberchat/Services/localization/language_constants.dart';
+import 'package:fiberchat/Services/Providers/call_history_provider.dart';
+import 'package:fiberchat/Services/Providers/LazyLoadingChatProvider.dart';
+import 'package:fiberchat/Services/Providers/SmartContactProviderWithLocalStoreData.dart';
+//*************   © Copyrighted by Thinkcreative_Technologies. An Exclusive item of Envato market. Make sure you have purchased a Regular License OR Extended license for the Source Code from Envato to use this product. See the License Defination attached with source code. *********************
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   if (message.data['title'] == 'Call Ended' ||
       message.data['title'] == 'Missed Call') {

@@ -1,68 +1,68 @@
-//*************   © Copyrighted by Thinkcreative_Technologies. An Exclusive item of Envato market. Make sure you have purchased a Regular License OR Extended license for the Source Code from Envato to use this product. See the License Defination attached with source code. *********************
-
+import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
-import 'package:fiberchat/Configs/app_constants.dart';
-import 'package:fiberchat/Configs/optional_constants.dart';
-import 'package:fiberchat/Screens/Broadcast/BroadcastDetails.dart';
-import 'package:fiberchat/Screens/Groups/widget/groupChatBubble.dart';
-import 'package:fiberchat/Screens/calling_screen/pickup_layout.dart';
-import 'package:fiberchat/Screens/chat_screen/chat.dart';
-import 'package:fiberchat/Services/Admob/admob.dart';
-import 'package:fiberchat/Services/Providers/BroadcastProvider.dart';
-import 'package:fiberchat/Screens/chat_screen/utils/uploadMediaWithProgress.dart';
-import 'package:fiberchat/Services/Providers/SmartContactProviderWithLocalStoreData.dart';
-import 'package:fiberchat/Services/Providers/Observer.dart';
-import 'package:fiberchat/Services/localization/language_constants.dart';
-import 'package:fiberchat/Utils/color_detector.dart';
-import 'package:fiberchat/Utils/custom_url_launcher.dart';
-import 'package:fiberchat/Utils/emoji_detect.dart';
-import 'package:fiberchat/Utils/mime_type.dart';
-import 'package:fiberchat/Utils/setStatusBarColor.dart';
-import 'package:fiberchat/Utils/theme_management.dart';
-import 'package:fiberchat/Utils/utils.dart';
-import 'package:fiberchat/widgets/AllinOneCameraGalleryImageVideoPicker/AllinOneCameraGalleryImageVideoPicker.dart';
-import 'package:fiberchat/widgets/CameraGalleryImagePicker/camera_image_gallery_picker.dart';
-import 'package:fiberchat/widgets/CameraGalleryImagePicker/multiMediaPicker.dart';
-import 'package:fiberchat/widgets/DownloadManager/download_all_file_type.dart';
-import 'package:fiberchat/widgets/InfiniteList/InfiniteCOLLECTIONListViewWidget.dart';
-import 'package:fiberchat/widgets/VideoEditor/video_editor.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:link_preview_generator/link_preview_generator.dart';
-import 'package:media_info/media_info.dart';
 import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
-import 'package:fiberchat/Configs/Enum.dart';
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart' as emojipic;
-import 'package:fiberchat/Configs/Dbkeys.dart';
-import 'package:fiberchat/Configs/Dbpaths.dart';
-import 'package:fiberchat/Screens/privacypolicy&TnC/PdfViewFromCachedUrl.dart';
-import 'package:fiberchat/widgets/SoundPlayer/SoundPlayerPro.dart';
-import 'package:fiberchat/Screens/call_history/callhistory.dart';
-import 'package:fiberchat/Screens/contact_screens/ContactsSelect.dart';
-import 'package:fiberchat/Models/DataModel.dart';
-import 'package:fiberchat/Screens/chat_screen/utils/photo_view.dart';
-import 'package:fiberchat/Utils/save.dart';
-import 'package:fiberchat/widgets/AudioRecorder/Audiorecord.dart';
-import 'package:fiberchat/widgets/DocumentPicker/documentPicker.dart';
-import 'package:fiberchat/widgets/VideoPicker/VideoPreview.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:giphy_get/giphy_get.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:video_thumbnail/video_thumbnail.dart';
-import 'package:fiberchat/Utils/unawaited.dart';
-import 'package:video_compress/video_compress.dart' as compress;
 import 'package:path/path.dart' as p;
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:giphy_get/giphy_get.dart';
+import 'package:fiberchat/Utils/save.dart';
+import 'package:fiberchat/Utils/utils.dart';
+import 'package:media_info/media_info.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:fiberchat/Configs/Enum.dart';
+import 'package:fiberchat/Configs/Dbkeys.dart';
+import 'package:fiberchat/Utils/mime_type.dart';
+import 'package:fiberchat/Configs/Dbpaths.dart';
+import 'package:fiberchat/Utils/unawaited.dart';
+import 'package:fiberchat/Models/DataModel.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:fiberchat/Utils/emoji_detect.dart';
+import 'package:fiberchat/Services/Admob/admob.dart';
+import 'package:fiberchat/Utils/color_detector.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fiberchat/Configs/app_constants.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
+import 'package:fiberchat/Utils/theme_management.dart';
+import 'package:fiberchat/Utils/setStatusBarColor.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:fiberchat/Screens/chat_screen/chat.dart';
+import 'package:fiberchat/Utils/custom_url_launcher.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:fiberchat/Configs/optional_constants.dart';
+import 'package:fiberchat/Services/Providers/Observer.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:video_compress/video_compress.dart' as compress;
+import 'package:fiberchat/widgets/VideoEditor/video_editor.dart';
+import 'package:fiberchat/Screens/call_history/callhistory.dart';
+import 'package:fiberchat/widgets/VideoPicker/VideoPreview.dart';
+import 'package:fiberchat/widgets/AudioRecorder/Audiorecord.dart';
+import 'package:fiberchat/Screens/Broadcast/BroadcastDetails.dart';
+import 'package:fiberchat/widgets/SoundPlayer/SoundPlayerPro.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:link_preview_generator/link_preview_generator.dart';
+import 'package:fiberchat/Screens/calling_screen/pickup_layout.dart';
+import 'package:fiberchat/Services/Providers/BroadcastProvider.dart';
+import 'package:fiberchat/Screens/chat_screen/utils/photo_view.dart';
+import 'package:fiberchat/Screens/Groups/widget/groupChatBubble.dart';
+import 'package:fiberchat/widgets/DocumentPicker/documentPicker.dart';
+import 'package:fiberchat/Screens/contact_screens/ContactsSelect.dart';
+import 'package:fiberchat/Services/localization/language_constants.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart' as emojipic;
+import 'package:fiberchat/widgets/DownloadManager/download_all_file_type.dart';
+import 'package:fiberchat/Screens/privacypolicy&TnC/PdfViewFromCachedUrl.dart';
+import 'package:fiberchat/Screens/chat_screen/utils/uploadMediaWithProgress.dart';
+import 'package:fiberchat/widgets/CameraGalleryImagePicker/multiMediaPicker.dart';
+import 'package:fiberchat/widgets/InfiniteList/InfiniteCOLLECTIONListViewWidget.dart';
+import 'package:fiberchat/Services/Providers/SmartContactProviderWithLocalStoreData.dart';
+import 'package:fiberchat/widgets/CameraGalleryImagePicker/camera_image_gallery_picker.dart';
+import 'package:fiberchat/widgets/AllinOneCameraGalleryImageVideoPicker/AllinOneCameraGalleryImageVideoPicker.dart';
+//*************   © Copyrighted by Thinkcreative_Technologies. An Exclusive item of Envato market. Make sure you have purchased a Regular License OR Extended license for the Source Code from Envato to use this product. See the License Defination attached with source code. *********************
+
 
 class BroadcastChatPage extends StatefulWidget {
   final String currentUserno;
@@ -1996,133 +1996,134 @@ class _BroadcastChatPageState extends State<BroadcastChatPage>
                       ],
                     ),
                   ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width / 3.27,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        RawMaterialButton(
-                          disabledElevation: 0,
-                          onPressed: () async {
-                            hidekeyboard(context);
-                            Navigator.of(context).pop();
-                            File? selectedMedia =
-                                await pickVideoFromgallery(context)
-                                    .catchError((err) {
-                              Fiberchat.toast(
-                                  getTranslated(context, "invalidfile"));
-                              return null;
-                            });
+              SizedBox(
+  width: MediaQuery.of(context).size.width / 3.27,
+  child: Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      RawMaterialButton(
+        disabledElevation: 0,
+        onPressed: () async {
+          print("Button pressed");
+          hidekeyboard(context);
+          Navigator.of(context).pop();
+          File? selectedMedia = await pickVideoFromgallery(context)
+              .catchError((err) {
+            print("Error picking video: $err");
+            Fiberchat.toast(getTranslated(context, "invalidfile"));
+            return null;
+          });
 
-                            if (selectedMedia == null) {
-                              setStatusBarColor(widget.prefs);
-                            } else {
-                              setStatusBarColor(widget.prefs);
-                              String fileExtension =
-                                  p.extension(selectedMedia.path).toLowerCase();
+          if (selectedMedia == null) {
+            print("No media selected");
+            setStatusBarColor(widget.prefs);
+          } else {
+            print("Selected media: ${selectedMedia.path}");
+            setStatusBarColor(widget.prefs);
+            String fileExtension =
+                p.extension(selectedMedia.path).toLowerCase();
 
-                              if (fileExtension == ".mp4" ||
-                                  fileExtension == ".mov") {
-                                final tempDir = await getTemporaryDirectory();
-                                File file = await File(
-                                        '${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.mp4')
-                                    .create();
-                                file.writeAsBytesSync(
-                                    selectedMedia.readAsBytesSync());
+            if (fileExtension == ".mp4" || fileExtension == ".mov") {
+              print("Valid file type");
 
-                                await Navigator.push(
-                                    this.context,
-                                    new MaterialPageRoute(
-                                        builder: (context) => new VideoEditor(
-                                            prefs: widget.prefs,
-                                            onClose: () {
-                                              setStatusBarColor(widget.prefs);
-                                            },
-                                            thumbnailQuality: 90,
-                                            videoQuality: 100,
-                                            maxDuration: 1900,
-                                            onEditExported: (videoFile,
-                                                thumnailFile) async {
-                                              int timeStamp = DateTime.now()
-                                                  .millisecondsSinceEpoch;
-                                              String videoFileext =
-                                                  p.extension(file.path);
-                                              String videofileName =
-                                                  'Video-$timeStamp$videoFileext';
-                                              String? videoUrl =
-                                                  await uploadSelectedLocalFileWithProgressIndicator(
-                                                      file,
-                                                      true,
-                                                      false,
-                                                      timeStamp,
-                                                      filenameoptional:
-                                                          videofileName);
-                                              if (videoUrl != null) {
-                                                String? thumnailUrl =
-                                                    await uploadSelectedLocalFileWithProgressIndicator(
-                                                        thumnailFile,
-                                                        false,
-                                                        true,
-                                                        timeStamp,
-                                                        filenameoptional:
-                                                            videofileName);
-                                                if (thumnailUrl != null) {
-                                                  onSendMessage(
-                                                      context: context,
-                                                      content: videoUrl +
-                                                          '-BREAK-' +
-                                                          thumnailUrl +
-                                                          '-BREAK-' +
-                                                          videometadata! +
-                                                          '-BREAK-' +
-                                                          videofileName,
-                                                      type: MessageType.video,
-                                                      recipientList: broadcastList
-                                                          .toList()
-                                                          .firstWhere((element) =>
-                                                              element.docmap[Dbkeys
-                                                                  .broadcastID] ==
-                                                              widget
-                                                                  .broadcastID)
-                                                          .docmap[Dbkeys.broadcastMEMBERSLIST]);
-                                                  Fiberchat.toast(getTranslated(
-                                                      this.context, 'sent'));
-                                                  file.delete();
-                                                  thumnailFile.delete();
-                                                }
-                                              }
-                                            },
-                                            file: File(file.path))));
-                              } else {
+              final tempDir = await getTemporaryDirectory();
+              File file = await File(
+                      '${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.mp4')
+                  .create();
+              file.writeAsBytesSync(selectedMedia.readAsBytesSync());
+
+              print("Temporary file path: ${file.path}");
+
+              await Navigator.push(
+                  this.context,
+                  new MaterialPageRoute(
+                      builder: (context) => new VideoEditor(
+                          prefs: widget.prefs,
+                          onClose: () {
+                            setStatusBarColor(widget.prefs);
+                          },
+                          thumbnailQuality: 90,
+                          videoQuality: 100,
+                          maxDuration: 1900,
+                          onEditExported: (videoFile, thumnailFile) async {
+                            print("Video editing completed");
+
+                            int timeStamp =
+                                DateTime.now().millisecondsSinceEpoch;
+                            String videoFileext = p.extension(file.path);
+                            String videofileName =
+                                'Video-$timeStamp$videoFileext';
+                            String? videoUrl =
+                                await uploadSelectedLocalFileWithProgressIndicator(
+                                    file, true, false, timeStamp,
+                                    filenameoptional: videofileName);
+                            if (videoUrl != null) {
+                              print("Video URL: $videoUrl");
+
+                              String? thumnailUrl =
+                                  await uploadSelectedLocalFileWithProgressIndicator(
+                                      thumnailFile, false, true, timeStamp,
+                                      filenameoptional: videofileName);
+                              if (thumnailUrl != null) {
+                                print("Thumbnail URL: $thumnailUrl");
+
+                                onSendMessage(
+                                    context: context,
+                                    content: videoUrl +
+                                        '-BREAK-' +
+                                        thumnailUrl +
+                                        '-BREAK-' +
+                                        videometadata! +
+                                        '-BREAK-' +
+                                        videofileName,
+                                    type: MessageType.video,
+                                    recipientList: broadcastList
+                                        .toList()
+                                        .firstWhere((element) =>
+                                            element.docmap[Dbkeys
+                                                    .broadcastID] ==
+                                                widget.broadcastID)
+                                        .docmap[Dbkeys.broadcastMEMBERSLIST]);
                                 Fiberchat.toast(
-                                    "File type not supported. Please choose a valid .mp4, .mov file. \n\nSelected file was $fileExtension ");
+                                    getTranslated(this.context, 'sent'));
+                                file.delete();
+                                thumnailFile.delete();
                               }
                             }
                           },
-                          elevation: .5,
-                          fillColor: Colors.pink[600],
-                          child: Icon(
-                            Icons.video_collection_sharp,
-                            size: 25.0,
-                            color: Colors.white,
-                          ),
-                          padding: EdgeInsets.all(15.0),
-                          shape: CircleBorder(),
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          getTranslated(this.context, 'video'),
-                          textAlign: TextAlign.center,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(color: fiberchatGrey, fontSize: 14),
-                        )
-                      ],
-                    ),
-                  ),
+                          file: File(file.path))));
+            } else {
+              print("Invalid file type: $fileExtension");
+              Fiberchat.toast(
+                  "File type not supported. Please choose a valid .mp4, .mov file. \n\nSelected file was $fileExtension ");
+            }
+          }
+        },
+        elevation: .5,
+        fillColor: Colors.pink[600],
+        child: Icon(
+          Icons.video_collection_sharp,
+          size: 25.0,
+          color: Colors.white,
+        ),
+        padding: EdgeInsets.all(15.0),
+        shape: CircleBorder(),
+      ),
+      SizedBox(
+        height: 8,
+      ),
+      Text(
+        getTranslated(this.context, 'video'),
+        textAlign: TextAlign.center,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(color: fiberchatGrey, fontSize: 14),
+      )
+    ],
+  ),
+),
+
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 3.27,
                     child: Column(

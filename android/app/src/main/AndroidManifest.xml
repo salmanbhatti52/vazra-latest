@@ -2,6 +2,27 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
     package="com.tctech.fiberchatdemo">
+	<uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.WRITE_MEDIA_STORAGE"/>
+	<uses-permission android:name="android.permission.READ_MEDIA_STORAGE"/>
+	<uses-permission android:name="android.permission.CAMERA" />
+	<uses-permission android:name="android.permission.READ_CONTACTS" />
+	<uses-permission android:name="android.permission.WRITE_CONTACTS" />
+	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+	<uses-permission android:name="android.permission.RECORD_AUDIO" />
+	<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+	<uses-permission android:name="android.permission.BLUETOOTH" />
+	<uses-permission android:name="android.permission.VIBRATE" />
+	<uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
+    tools:ignore="ProtectedPermissions" />
 	<queries>
 		<intent>
 			<action android:name="android.media.action.IMAGE_CAPTURE" />
@@ -12,24 +33,20 @@
 		</intent>
 	</queries>
 	<application
-   android:label="Vazra"
-        android:name="${applicationName}"
-     android:icon="@mipmap/ic_launcher"
-     android:allowBackup="false"
-     android:fullBackupOnly="false"
-	    android:requestLegacyExternalStorage="true"
-          >
+   		android:label="Vazra"
+    	android:name="${applicationName}"
+     	android:icon="@mipmap/ic_launcher"
+     	android:allowBackup="false"
+     	android:fullBackupOnly="false"
+	    android:requestLegacyExternalStorage="true">
 		<meta-data
         android:name="com.google.firebase.messaging.default_notification_icon"
-       android:resource="@drawable/transparent" 
-       android:exported="true"
- 
-       
-       />
+       	android:resource="@drawable/transparent" 
+       	android:exported="true"/>
 		<meta-data
         android:name="com.google.firebase.messaging.default_notification_color"
         android:resource="@color/colorAccent"
-        android:exported="true" />
+        android:exported="true"/>
 		<activity
             android:name=".MainActivity"
             android:exported="true"
@@ -39,6 +56,7 @@
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize" 
             android:requestLegacyExternalStorage="true"
+			
            >
 			<!-- android:showWhenLocked="true"
     android:turnScreenOn="true" -->
@@ -124,26 +142,5 @@
 	android:value="ca-app-pub-3940256099942544~3347511713"
       android:exported="true"/>
 		<!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
-	</application>
-
-    <uses-permission android:name="android.permission.INTERNET"/>
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-	<uses-permission android:name="android.permission.CAMERA" />
-	<uses-permission android:name="android.permission.READ_CONTACTS" />
-	<uses-permission android:name="android.permission.WRITE_CONTACTS" />
-	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-	<uses-permission android:name="android.permission.RECORD_AUDIO" />
-	<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-	<uses-permission android:name="android.permission.BLUETOOTH" />
-	<uses-permission android:name="android.permission.VIBRATE" />
-
-	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
-    tools:ignore="ProtectedPermissions" />
- 
+	</application> 
 </manifest>

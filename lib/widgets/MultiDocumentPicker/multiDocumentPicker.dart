@@ -1,21 +1,20 @@
-//*************   © Copyrighted by Thinkcreative_Technologies. An Exclusive item of Envato market. Make sure you have purchased a Regular License OR Extended license for the Source Code from Envato to use this product. See the License Defination attached with source code. *********************
-
 import 'dart:io';
-import 'package:fiberchat/Configs/app_constants.dart';
-import 'package:fiberchat/Screens/status/components/VideoPicker/VideoPicker.dart';
-import 'package:fiberchat/Services/Providers/Observer.dart';
-import 'package:fiberchat/Services/localization/language_constants.dart';
-import 'package:fiberchat/Utils/color_detector.dart';
-import 'package:fiberchat/Utils/open_settings.dart';
-import 'package:fiberchat/Utils/theme_management.dart';
+import 'package:path/path.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:fiberchat/Utils/utils.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
+import 'package:fiberchat/Utils/open_settings.dart';
+import 'package:fiberchat/Utils/color_detector.dart';
+import 'package:fiberchat/Configs/app_constants.dart';
+import 'package:fiberchat/Utils/theme_management.dart';
+import 'package:fiberchat/Services/Providers/Observer.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fiberchat/Services/localization/language_constants.dart';
+import 'package:fiberchat/Screens/status/components/VideoPicker/VideoPicker.dart';
+//*************   © Copyrighted by Thinkcreative_Technologies. An Exclusive item of Envato market. Make sure you have purchased a Regular License OR Extended license for the Source Code from Envato to use this product. See the License Defination attached with source code. *********************
 
 class MultiDocumentPicker extends StatefulWidget {
   MultiDocumentPicker(
@@ -433,31 +432,47 @@ class _MultiDocumentPickerState extends State<MultiDocumentPicker> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               _buildActionButton(
-                  new Key('multi'),
-                  Icons.add,
-                  checkTotalNoOfFilesIfExceeded() == false
-                      ? () {
-                          Fiberchat.checkAndRequestPermission(
-                                  Permission.storage)
-                              .then((res) {
-                            if (res == true) {
-                              captureMultiPageDoc(false);
-                            } else if (res == false) {
-                              Fiberchat.showRationale(
-                                  getTranslated(this.context, 'pgi'));
-                              Navigator.pushReplacement(
-                                  this.context,
-                                  new MaterialPageRoute(
-                                      builder: (context) => OpenSettings(
-                                            prefs: widget.prefs,
-                                          )));
-                            } else {}
-                          });
-                        }
-                      : () {
-                          Fiberchat.toast(
-                              '${getTranslated(this.context, 'maxnooffiles')}: ${observer.maxNoOfFilesInMultiSharing}');
-                        }),
+                new Key('multi'),
+                Icons.add,
+                checkTotalNoOfFilesIfExceeded() == false
+                    ? () async {
+                        captureMultiPageDoc(false);
+                        // print('Attempting to request storage permission...');
+
+                        // var permissionStatus =
+                        //     await Fiberchat.checkAndRequestPermission(
+                        //         Permission.storage);
+                        // print('Storage permission status: $permissionStatus');
+
+                        // if (permissionStatus == true) {
+                        //   print(
+                        //       'Storage permission granted. Proceeding with capturing multi-page document.');
+                        //   captureMultiPageDoc(false);
+                        // } else if (permissionStatus == false) {
+                        //   print(
+                        //       'Storage permission denied. Showing rationale and opening settings.');
+                        //   Fiberchat.showRationale(
+                        //       getTranslated(this.context, 'pgi'));
+                        //   Navigator.pushReplacement(
+                        //       this.context,
+                        //       new MaterialPageRoute(
+                        //           builder: (context) => OpenSettings(
+                        //                 prefs: widget.prefs,
+                        //               )));
+                        // } else {
+                        //   Fiberchat.showRationale(
+                        //       getTranslated(this.context, 'pgv'));
+                        //   print('Permission request result: $permissionStatus');
+                        //   // Handle other cases if needed
+                        // }
+                      }
+                    : () {
+                        print(
+                            'Max number of files exceeded. Showing toast message.');
+                        Fiberchat.toast(
+                            '${getTranslated(this.context, 'maxnooffiles')}: ${observer.maxNoOfFilesInMultiSharing}');
+                      },
+              ),
             ]));
   }
 
