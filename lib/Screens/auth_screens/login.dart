@@ -466,6 +466,8 @@ class LoginScreenState extends State<LoginScreen>
             unawaited(widget.prefs.setBool(Dbkeys.isTokenGenerated, true));
             await widget.prefs.setString(Dbkeys.isSecuritySetupDone, phoneNo);
             await subscribeToNotification(phoneNo, true);
+            var mynickname = widget.prefs.getString(Dbkeys.nickname) ?? '';
+            print("mynicknameeeeeeeeeeeeeeeeeeeeeeeeeeeeeee $mynickname");
             unawaited(Navigator.pushReplacement(
                 this.context,
                 MaterialPageRoute(

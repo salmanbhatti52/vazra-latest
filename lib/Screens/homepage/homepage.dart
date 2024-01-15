@@ -151,6 +151,7 @@ class HomepageState extends State<Homepage>
   void initState() {
     listenToSharingintent();
     listenToNotification();
+    
     super.initState();
     getSignedInUserOrRedirect();
     setdeviceinfo();

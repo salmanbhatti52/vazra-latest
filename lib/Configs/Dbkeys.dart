@@ -253,6 +253,8 @@ class Dbkeys {
   static final String firebaseStorageNoObjectFound8 = 'not delete';
 
   //----All App Constants ----
+  static final String serverKey =
+      "AAAAaN3f9eY:APA91bE7a0W65HOSmhSIn0Htm8Hqw0yx12Sge0OCUo7_1CvYCIgGe6ZGWeTRHmRKNoRNkbAT3833BCosTnuIRdWcfggpuIJQfvsimV74KLVoR2inaUZtoqRC6byKW-3tg064LNeNcbLJ";
   static final String timestampField = 'timestamp';
   static final String isTokenGenerated = 'isTokenGenerated';
   static final String notificationTokens = 'notificationTokens';

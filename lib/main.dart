@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:core';
 import 'package:camera/camera.dart';
+import 'package:fiberchat/FirebaseNotifications/firebaseotify.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,6 +23,7 @@ import 'package:fiberchat/Services/Providers/TimerProvider.dart';
 import 'package:fiberchat/Services/Providers/seen_provider.dart';
 import 'package:fiberchat/Services/Providers/user_provider.dart';
 import 'package:fiberchat/Services/Providers/StatusProvider.dart';
+// import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fiberchat/Screens/splash_screen/splash_screen.dart';
 import 'package:fiberchat/Services/Providers/currentchat_peer.dart';
@@ -33,14 +35,12 @@ import 'package:fiberchat/Services/localization/language_constants.dart';
 import 'package:fiberchat/Services/Providers/call_history_provider.dart';
 import 'package:fiberchat/Services/Providers/LazyLoadingChatProvider.dart';
 import 'package:fiberchat/Services/Providers/SmartContactProviderWithLocalStoreData.dart';
-//*************   © Copyrighted by Thinkcreative_Technologies. An Exclusive item of Envato market. Make sure you have purchased a Regular License OR Extended license for the Source Code from Envato to use this product. See the License Defination attached with source code. *********************
 
+//*************   © Copyrighted by Thinkcreative_Technologies. An Exclusive item of Envato market. Make sure you have purchased a Regular License OR Extended license for the Source Code from Envato to use this product. See the License Defination attached with source code. *********************
+String appID = "8c44a948-63e4-4d6b-a509-752b8c56e102";
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
+  print("Handling a background message: ${message.messageId}");
   if (message.data['title'] == 'Call Ended' ||
       message.data['title'] == 'Missed Call') {
     flutterLocalNotificationsPlugin..cancelAll();
@@ -73,8 +73,16 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 List<CameraDescription> cameras = <CameraDescription>[];
 
 void main() async {
-  final WidgetsBinding binding = WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding binding = WidgetsFlutterBinding.ensureInitialized();
 
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  // OneSignal.initialize("$appID");
+  // String? fcmTokenn = await FirebaseMessaging.instance.getToken();
+  // print("tokennnnn: $fcmTokenn");
+  await FirebaseMessagingNotification().initNotify();
+  // OneSignal.Notifications.requestPermission(true);
   binding.renderView.automaticSystemUiAdjustment = false;
   if (Platform.isAndroid) {
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);

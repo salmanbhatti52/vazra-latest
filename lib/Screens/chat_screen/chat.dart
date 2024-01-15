@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:gif/gif.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
@@ -219,13 +221,17 @@ class _ChatScreenState extends State<ChatScreen>
     gifController = GifController(vsync: this);
   }
 
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   @override
   void initState() {
     super.initState();
+    fcmTokenGet();
     _cachedModel = widget.model;
     peerNo = widget.peerNo;
     currentUserNo = widget.currentUserNo;
     unread = widget.unread;
+    print("currentUserNo $currentUserNo");
+    print("peerNo : $peerNo");
     // initAudioPlayer();
     // _load();
     Fiberchat.internetLookUp();
@@ -259,6 +265,19 @@ class _ChatScreenState extends State<ChatScreen>
     setStatusBarColor(widget.prefs);
   }
 
+//   void _sendTestNotification() async {
+//     await _firebaseMessaging.subscribeToTopic('Vazra');
+// String? fcmToken = await _firebaseMessaging.getToken();
+//     await FirebaseMessaging.instance.send({
+//           'to': '$fcmToken',
+//           'notification': {
+//             'title': 'Test Notification',
+//             'body': 'This is a test notification!',
+//           },
+//         })
+//         .then((value) => print("Test Notification sent successfully"))
+//         .catchError((error) => print("Error sending test notification: $error"));
+//   }
   bool hasPeerBlockedMe = false;
   listenToBlock() {
     chatStatusSubscriptionForPeer = FirebaseFirestore.instance
@@ -882,6 +901,60 @@ class _ChatScreenState extends State<ChatScreen>
     await widget.prefs.setBool('islanguageselected', true);
   }
 
+  var notificationToken;
+  var lastToken;
+  fcmTokenGet() async {
+    await SharedPreferences.getInstance();
+    mynickname = widget.prefs.getString(Dbkeys.nickname) ?? '';
+    print("$mynickname");
+    print("${Dbkeys.serverKey}");
+    final snapshot = await FirebaseFirestore.instance
+        .collection(DbPaths.collectionusers)
+        .doc(widget.peerNo)
+        .get();
+
+    if (snapshot.exists) {
+      notificationToken = snapshot.data()!['notificationTokens'];
+      if (notificationToken != null && notificationToken!.isNotEmpty) {
+        lastToken = notificationToken?.last.toString();
+        print(lastToken);
+      } else {
+        print('No tokens found');
+      }
+    } else {
+      print('Document does not exist');
+    }
+  }
+
+  Future<void> sendNotification() async {
+    var url = 'https://fcm.googleapis.com/fcm/send';
+    var header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'key=${Dbkeys.serverKey}',
+    };
+    var request = {
+      'to': '$lastToken',
+      'notification': {
+        'title': '$mynickname',
+        'body': '${textEditingController.text}',
+      },
+    };
+
+    var response = await http.post(
+      Uri.parse(url),
+      headers: header,
+      body: json.encode(request),
+    );
+
+    if (response.statusCode == 200) {
+      print('Notification sent');
+      print('Response body: ${response.body}');
+    } else {
+      print('Notification not sent');
+      print('Response body: ${response.body}');
+    }
+  }
+
   void onSendMessage(
       BuildContext context, String content, MessageType type, int? timestamp,
       {bool isForward = false}) async {
@@ -893,6 +966,7 @@ class _ChatScreenState extends State<ChatScreen>
         tempcontent = content.trim();
         if (chatStatus == null || chatStatus == 4)
           ChatController.request(currentUserNo, peerNo, chatId);
+        // await sendNotification();
         textEditingController.clear();
         final encrypted = AESEncryptData.encryptAES(content, sharedSecret);
 
@@ -2396,7 +2470,6 @@ class _ChatScreenState extends State<ChatScreen>
                     Image.asset(
                       'assets/images/mapview.jpg',
                     ),
-                    
                   ],
                 )
               : Image.asset(
@@ -5409,7 +5482,9 @@ class _ChatScreenState extends State<ChatScreen>
       when = IsShowNativeTimDate == true
           ? getTranslated(this.context, DateFormat.MMMM().format(date)) +
               ' ' +
-              DateFormat.d().format(date) + ' ' + DateFormat.y().format(date)
+              DateFormat.d().format(date) +
+              ' ' +
+              DateFormat.y().format(date)
           : when = DateFormat.MMMM().format(date);
     return when;
   }
@@ -5436,8 +5511,9 @@ class _ChatScreenState extends State<ChatScreen>
     return chatStatus == ChatStatus.blocked.index;
   }
 
+  var mynickname;
   call(BuildContext context, bool isvideocall) async {
-    var mynickname = widget.prefs.getString(Dbkeys.nickname) ?? '';
+    mynickname = widget.prefs.getString(Dbkeys.nickname) ?? '';
 
     var myphotoUrl = widget.prefs.getString(Dbkeys.photoUrl) ?? '';
 
