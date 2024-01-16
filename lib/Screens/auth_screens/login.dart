@@ -263,7 +263,7 @@ class LoginScreenState extends State<LoginScreen>
     };
     debugPrint('Verify phone triggered');
     // try {
-    firebaseAuth.setSettings(appVerificationDisabledForTesting: true);
+    // firebaseAuth.setSettings(appVerificationDisabledForTesting: true);
 
     await firebaseAuth.verifyPhoneNumber(
         phoneNumber: (phoneCode! + _phoneNo.text).trim(),

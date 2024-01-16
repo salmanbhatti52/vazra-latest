@@ -3,7 +3,6 @@
 import 'dart:async';
 import 'dart:core';
 import 'dart:io';
-
 import 'package:async/async.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:device_info_plus/device_info_plus.dart';
