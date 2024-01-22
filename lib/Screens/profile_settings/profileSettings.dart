@@ -147,7 +147,6 @@ class ProfileSettingState extends State<ProfileSetting> {
       });
       Fiberchat.toast(getTranslated(this.context, 'saved'));
       Navigator.of(this.context).pop();
-      Navigator.of(this.context).pop();
     }).catchError((err) {
       setState(() {
         isLoading = false;

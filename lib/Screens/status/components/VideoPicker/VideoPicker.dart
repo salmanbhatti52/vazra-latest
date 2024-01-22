@@ -122,27 +122,30 @@ class _StatusVideoEditorState extends State<StatusVideoEditor> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              _buildActionButton(new Key('retake'), Icons.video_library_rounded,
-                  () {
-                Fiberchat.checkAndRequestPermission(Platform.isIOS
-                        ? Permission.mediaLibrary
-                        : Permission.storage)
-                    .then((res) {
-                  if (res) {
-                    _pickVideo();
-                  } else {
-                    Fiberchat.showRationale(
-                      getTranslated(context, 'pgv'),
-                    );
-                    Navigator.pushReplacement(
-                        context,
-                        new MaterialPageRoute(
-                            builder: (context) => OpenSettings(
-                                  prefs: widget.prefs,
-                                )));
-                  }
-                });
-              }),
+              _buildActionButton(new Key('retake'), Icons.video_library_rounded, () {
+  _pickVideo();
+}),
+              // _buildActionButton(new Key('retake'), Icons.video_library_rounded,
+              //     () {
+              //   Fiberchat.checkAndRequestPermission(Platform.isIOS
+              //           ? Permission.mediaLibrary
+              //           : Permission.storage)
+              //       .then((res) {
+              //     if (res) {
+              //       _pickVideo();
+              //     } else {
+              //       Fiberchat.showRationale(
+              //         getTranslated(context, 'pgv'),
+              //       );
+              //       Navigator.pushReplacement(
+              //           context,
+              //           new MaterialPageRoute(
+              //               builder: (context) => OpenSettings(
+              //                     prefs: widget.prefs,
+              //                   )));
+              //     }
+              //   });
+              // }),
               _buildActionButton(new Key('upload'), Icons.photo_camera, () {
                 Fiberchat.checkAndRequestPermission(Permission.camera)
                     .then((res) {

@@ -3417,14 +3417,14 @@ class _GroupChatPageState extends State<GroupChatPage>
     final bool isMe = doc[Dbkeys.groupmsgSENDBY] == widget.currentUserno;
     return SizedBox(
       width: 220,
-      height: 126,
+      height: 145,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           doc.containsKey(Dbkeys.isForward) == true
               ? doc[Dbkeys.isForward] == true
                   ? Container(
-                      margin: EdgeInsets.only(bottom: 10),
+                      margin: EdgeInsets.only(bottom: 5),
                       child: Row(
                           mainAxisAlignment: isMe == true
                               ? MainAxisAlignment.start

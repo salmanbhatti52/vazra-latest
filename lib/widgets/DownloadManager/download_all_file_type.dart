@@ -47,8 +47,8 @@ class MobileDownloadService implements DownloadService {
       required SharedPreferences prefs,
       required bool isOpenAfterDownload,
       GlobalKey? keyloader}) async {
-    bool hasPermission = await _requestWritePermission();
-    if (!hasPermission) return;
+    // bool hasPermission = await _requestWritePermission();
+    // if (!hasPermission) return;
 
     Dio dio = Dio();
     var dir = Platform.isAndroid

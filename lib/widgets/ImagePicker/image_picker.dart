@@ -177,21 +177,24 @@ class _SingleImagePickerState extends State<SingleImagePicker> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               _buildActionButton(new Key('retake'), Icons.photo_library, () {
-                Fiberchat.checkAndRequestPermission(Permission.storage)
-                    .then((res) {
-                  if (res) {
-                    captureImage(ImageSource.gallery);
-                  } else {
-                    Fiberchat.showRationale(getTranslated(context, 'pgi'));
-                    Navigator.pushReplacement(
-                        context,
-                        new MaterialPageRoute(
-                            builder: (context) => OpenSettings(
-                                  prefs: widget.prefs,
-                                )));
-                  }
-                });
+                captureImage(ImageSource.gallery);
               }),
+              // _buildActionButton(new Key('retake'), Icons.photo_library, () {
+              //   Fiberchat.checkAndRequestPermission(Permission.storage)
+              //       .then((res) {
+              //     if (res) {
+              //       captureImage(ImageSource.gallery);
+              //     } else {
+              //       Fiberchat.showRationale(getTranslated(context, 'pgi'));
+              //       Navigator.pushReplacement(
+              //           context,
+              //           new MaterialPageRoute(
+              //               builder: (context) => OpenSettings(
+              //                     prefs: widget.prefs,
+              //                   )));
+              //     }
+              //   });
+              // }),
               _buildActionButton(new Key('upload'), Icons.photo_camera, () {
                 Fiberchat.checkAndRequestPermission(Permission.camera)
                     .then((res) {
